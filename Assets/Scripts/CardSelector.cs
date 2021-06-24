@@ -1,55 +1,43 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
 public class CardSelector : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    // Event that triggers whenever a valid card selection happens
+    public event EventHandler<Card> OnCardSelect;
+
+    // Click detection method (mouse vs touch screen)
+    private IClickMethod clickMethod = new ClickByMouse();
+
+    private void Start()
     {
-        
+        OnCardSelect += (sender, card) => card.Flip();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector2? clickPosition = GetClickedScreenPosition();
-        if (clickPosition.HasValue)
+        if (clickMethod.ClickHappened())
         {
-            Debug.Log(clickPosition.Value);
-            Card card = GetSelectedCard(clickPosition.Value);
-
-            // If the card can be flipped
-            if (card != null && !card.IsFlipping)
+            var card = GetSelectedCard(clickMethod.GetClickScreenPosition());
+            if (card != null)
             {
-                card.Flip();
+                OnCardSelect.Invoke(this, card);
             }
         }
-    }
-
-    private Vector2? GetClickedScreenPosition()
-    {
-        //if (Input.touchCount > 0)
-        //{
-        //    return Input.GetTouch(0).position;
-        //}
-        if (Input.GetMouseButtonDown(0))
-        {
-            return Input.mousePosition;
-        }
-
-        return null;
     }
 
     // Try to find a card instance under clicked screen position.
     // Returns null if nothing was clicked.
     private Card GetSelectedCard(Vector2 screenPosition)
     {
-        Ray ray = Camera.main.ScreenPointToRay(screenPosition);
-        if (Physics.Raycast(ray, out RaycastHit hitinfo))
+        var ray = Camera.main.ScreenPointToRay(screenPosition);
+        if (Physics.Raycast(ray, out var hitinfo))
         {
-            GameObject obj = hitinfo.collider.gameObject;
+            var obj = hitinfo.collider.gameObject;
             if (obj.tag.Equals("Card"))
             {
                 return obj.GetComponent<Card>();

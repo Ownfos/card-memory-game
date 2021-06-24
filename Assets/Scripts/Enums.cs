@@ -7,7 +7,8 @@ public enum CardGroup
     Spade,
     Club,
     Diamond,
-    Heart
+    Heart,
+    Length
 }
 
 public enum CardNumber
@@ -24,5 +25,6 @@ public enum CardNumber
     Ten,
     Jack,
     Queen,
-    King
+    King,
+    Length
 }
