@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// An array of card image where the index
-// of image corresponds to its content
+// An array of card image where the index of image corresponds to its content
 //
 // Example)
-//  cardImageSet.images[0] should contain image for card '1'
-//  because CardNumber.One is 1.
+//  cardImageSet.images[0] should contain image
+//  for card '1' because CardNumber.One is 1.
 
 [System.Serializable]
 struct CardImageSet
@@ -20,16 +19,26 @@ public class CardGenerator : MonoBehaviour
     // An array of card image where each index corresponds to the CardGroup.
     //
     // Example)
-    //  cardImages[0] should contain a CardImageSet for spade,
-    //  because CardGroup.Spade is 0.
+    //  cardImages[0] should contain a CardImageSet
+    //  for spade, because CardGroup.Spade is 0.
     [SerializeField] private CardImageSet[] cardImages;
     [SerializeField] private GameObject cardPrefab;
 
-    private void Start()
+    private Card card;
+
+    void Start()
     {
-        var card = GenerateCard(RandomCardGroup(), RandomCardNumber());
-        card.GetComponent<Card>().Flip();
+        card = GenerateCard(RandomCardGroup(), RandomCardNumber()).GetComponent<Card>();
     }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            card.Flip();
+        }
+    }
+
 
     // Create a card instance and set its front face image appropriately
     public GameObject GenerateCard(CardGroup group, CardNumber number)
@@ -56,7 +65,7 @@ public class CardGenerator : MonoBehaviour
         return (CardNumber)Random.Range(0, 13);
     }
 
-    // Return the texture for front face of card
+    // Return the texture for front face of card.
     //
     // Example)
     //  FrontFaceTexture(CardGroup.Spade, CardNumber.Jack) will return

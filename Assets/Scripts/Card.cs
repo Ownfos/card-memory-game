@@ -11,7 +11,10 @@ public class Card : MonoBehaviour
     // The number of this card (e.g., CardNumber.Two)
     private CardNumber number;
 
+    // This variable is true when the card's front face is visible
     private bool isFlipped = false;
+
+    // The time it takes to complete flipping motion (in seconds)
     [SerializeField] float flipAnimationLength;
 
     void Awake()
@@ -27,6 +30,7 @@ public class Card : MonoBehaviour
         }
     }
 
+    // Flip the card around y-axis with animation.
     public void Flip()
     {
         isFlipped = !isFlipped;
@@ -47,6 +51,7 @@ public class Card : MonoBehaviour
         SetFrontFaceTexture(frontfaceTexture);
     }
 
+    // Set the card group and number
     private void SetCardType(CardGroup group, CardNumber number)
     {
         this.group = group;
