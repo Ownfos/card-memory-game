@@ -70,7 +70,7 @@ public class Card : MonoBehaviour
         for (int i = 0; i < transform.childCount; ++i)
         {
             var child = transform.GetChild(i).gameObject;
-            if (child.tag.Equals("FrontFace"))
+            if (child.CompareTag("FrontFace"))
             {
                 return child.GetComponent<MeshRenderer>().material;
             }

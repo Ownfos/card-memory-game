@@ -9,13 +9,8 @@ public class CardSelector : MonoBehaviour
     // Event that triggers whenever a valid card selection happens
     public event EventHandler<Card> OnCardSelect;
 
-    // Click detection method (mouse vs touch screen)
-    private IClickMethod clickMethod = new ClickByMouse();
-
-    private void Start()
-    {
-        OnCardSelect += (sender, card) => card.Flip();
-    }
+    // Click detection method (mouse / touch screen / replay)
+    public IClickMethod clickMethod = new ClickByMouse();
 
     // Update is called once per frame
     void Update()
@@ -38,7 +33,7 @@ public class CardSelector : MonoBehaviour
         if (Physics.Raycast(ray, out var hitinfo))
         {
             var obj = hitinfo.collider.gameObject;
-            if (obj.tag.Equals("Card"))
+            if (obj.CompareTag("Card"))
             {
                 return obj.GetComponent<Card>();
             }
