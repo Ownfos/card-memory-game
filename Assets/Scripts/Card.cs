@@ -34,7 +34,7 @@ public class Card : MonoBehaviour
     public void Flip()
     {
         isFlipped = !isFlipped;
-        float targetAngle = isFlipped ? 180.0f : 0.0f;
+        float targetAngle = isFlipped ? 179.9f : 0.1f;
         LeanTween.rotateY(gameObject, targetAngle, flipAnimationLength);
     }
 
