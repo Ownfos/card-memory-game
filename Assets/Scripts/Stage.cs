@@ -20,12 +20,32 @@ public class Stage : MonoBehaviour
         Initialize();
     }
 
-    // Start is called before the first frame update
     public void Initialize()
     {
+        // Prepare cards
         FindAllCardsInStage();
         ConfigureCards(configuration.GetCardConfiguration(cards.Count));
-        RegisterCardSelectEvent();
+
+        // Register event handler
+        RegisterCardSelectEventHandler();
+    }
+
+    // Register event handler for card selection event
+    private void RegisterCardSelectEventHandler()
+    {
+        var cardSelector = GameObject.FindGameObjectWithTag("CardSelector").GetComponent<CardSelector>();
+        cardSelector.OnCardSelect += OnCardSelectHandler;
+    }
+
+    // Event handler for card selection event.
+    // Flips the selected card if it's in stable state
+    // (i.e., flip animation is over)
+    private void OnCardSelectHandler(object sender, Card card)
+    {
+        if(!card.IsFlipping)
+        {
+            card.Flip();
+        }
     }
 
     // Loop over child objects and save their Card components to variable 'cards'
