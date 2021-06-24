@@ -36,6 +36,9 @@ public class Card : MonoBehaviour
     // This variable is true when the card's front face is visible
     public bool IsFlipped { get; private set; } = false;
 
+    // This variable is true when flipping animation is running
+    public bool IsFlipping { get; private set; } = false;
+
     // The material of front face quad in child object.
     // The front face object has tag "FrontFace".
     private Material frontfaceMaterial;
@@ -56,17 +59,25 @@ public class Card : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            Flip();
+            if (!IsFlipping)
+            {
+                Flip();
+            }
         }
     }
 
     // Flip the card around y-axis with animation.
     public void Flip()
     {
-        // Flip card
+        // Change state
         IsFlipped = !IsFlipped;
+        IsFlipping = true;
+
+        // Start flipping animation
         float targetAngle = IsFlipped ? 179.9f : 0.1f;
-        LeanTween.rotateY(gameObject, targetAngle, flipAnimationLength).setEase(flipAnimationType);
+        LeanTween.rotateY(gameObject, targetAngle, flipAnimationLength)
+            .setEase(flipAnimationType)
+            .setOnComplete(() => IsFlipping = false);
 
         // Trigger event
         OnFlip?.Invoke(this, EventArgs.Empty);
