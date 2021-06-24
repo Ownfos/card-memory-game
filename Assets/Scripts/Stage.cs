@@ -12,6 +12,9 @@ public class Stage : MonoBehaviour
     // The Card components of each card in this stage
     private List<Card> cards;
 
+    // The Card component of lastly flipped card instance
+    private Card lastFlippedCard = null;
+
     // Test code that initialize stage rightaway after creation.
     // In real application, Initialize should be called manually after
     // configuration strategy is correctly set.
@@ -20,6 +23,8 @@ public class Stage : MonoBehaviour
         Initialize();
     }
 
+    // Setup cards according to configuration strategy
+    // and register card selection event handler
     public void Initialize()
     {
         // Prepare cards
@@ -42,7 +47,7 @@ public class Stage : MonoBehaviour
     // (i.e., flip animation is over)
     private void OnCardSelectHandler(object sender, Card card)
     {
-        if(!card.IsFlipping)
+        if(!card.IsFlipping && !card.IsFlipped)
         {
             card.Flip();
         }
@@ -85,7 +90,46 @@ public class Stage : MonoBehaviour
     {
         if (card.IsFlipped)
         {
-            Debug.Log("Flip event occured");
+            // First card is flipped
+            if (lastFlippedCard == null)
+            {
+                lastFlippedCard = card;
+            }
+            // Second card is flipped
+            else
+            {
+                if (lastFlippedCard.Type.Equals(card.Type))
+                {
+                    HandleMatch(lastFlippedCard, card);
+                }
+                else
+                {
+                    HandleMismatch(lastFlippedCard, card);
+                }
+                lastFlippedCard = null;
+            }
         }
+    }
+
+    // Mark flipped pair of card as correct
+    private void HandleMatch(Card card1, Card card2)
+    {
+        card1.MarkAsCorrectlyFlipped();
+        card2.MarkAsCorrectlyFlipped();
+    }
+
+    // After some delay, flip back each card
+    private void HandleMismatch(Card card1, Card card2)
+    {
+        StartCoroutine(FlipBack(card1));
+        StartCoroutine(FlipBack(card2));
+    }
+
+    // Make sure that current flip animation is done
+    // and then flip the card back
+    private IEnumerator FlipBack(Card card)
+    {
+        yield return new WaitForSeconds(card.FlipAnimationLength * 1.2f);
+        card.Flip();
     }
 }

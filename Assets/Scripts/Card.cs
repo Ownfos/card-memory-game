@@ -15,8 +15,12 @@ public class Card : MonoBehaviour
     // This variable is true when flipping animation is running
     public bool IsFlipping { get; private set; } = false;
 
+    // This variable is set to true by Stage instance
+    // when a matching pair is consecutively flipped.
+    public bool IsCorrectlyFlipped { get; private set; } = false;
+
     // The time it takes to complete flipping motion (in seconds)
-    [SerializeField] private float flipAnimationLength;
+    public float FlipAnimationLength { get; private set; } = 1.5f;
 
     // The way flipping motion occurs
     [SerializeField] private LeanTweenType flipAnimationType;
@@ -42,7 +46,7 @@ public class Card : MonoBehaviour
 
         // Start flipping animation
         var targetAngle = IsFlipped ? 179.9f : 0.1f;
-        LeanTween.rotateY(gameObject, targetAngle, flipAnimationLength)
+        LeanTween.rotateY(gameObject, targetAngle, FlipAnimationLength)
             .setEase(flipAnimationType)
             .setOnComplete(() => IsFlipping = false);
 
@@ -55,6 +59,12 @@ public class Card : MonoBehaviour
     {
         Type = type;
         SetFrontFaceTexture(frontfaceTexture);
+    }
+
+    // Set IsCorrectlyFlipped to true
+    public void MarkAsCorrectlyFlipped()
+    {
+        IsCorrectlyFlipped = true;
     }
 
     // Change the front face image of this card
