@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 264325348}
   m_Layer: 0
   m_Name: CardGenerator
-  m_TagString: Untagged
+  m_TagString: CardGenerator
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -409,7 +409,7 @@ GameObject:
   - component: {fileID: 2007509424}
   - component: {fileID: 2007509423}
   m_Layer: 0
-  m_Name: Stage
+  m_Name: Stage1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -427,6 +427,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb74131181049e7499d864f18fe7bea1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardPositions:
+  - {x: 1, y: 1, z: 0}
+  - {x: 1, y: -1, z: 0}
+  - {x: -1, y: 1, z: 0}
+  - {x: -1, y: -1, z: 0}
 --- !u!4 &2007509424
 Transform:
   m_ObjectHideFlags: 0

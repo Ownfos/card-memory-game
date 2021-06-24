@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - FrontFace
+  - CardGenerator
   layers:
   - Default
   - TransparentFX
