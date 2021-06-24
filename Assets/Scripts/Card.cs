@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public struct CardType
 {
@@ -17,14 +18,17 @@ public struct CardType
     {
         return new CardType
         {
-            group = (CardGroup)Random.Range(0, 4),
-            number = (CardNumber)Random.Range(0, 13)
+            group = (CardGroup)UnityEngine.Random.Range(0, 4),
+            number = (CardNumber)UnityEngine.Random.Range(0, 13)
         };
     }
 }
 
 public class Card : MonoBehaviour
 {
+    // Event that triggers whenever this card is flipped
+    public event EventHandler OnFlip;
+
     // The material of front face quad in child object.
     // The front face object has tag "FrontFace".
     private Material frontfaceMaterial;
@@ -36,6 +40,9 @@ public class Card : MonoBehaviour
 
     // The time it takes to complete flipping motion (in seconds)
     [SerializeField] float flipAnimationLength;
+
+    // The way flipping motion occurs
+    [SerializeField] LeanTweenType flipAnimationType;
 
     void Awake()
     {
@@ -50,12 +57,24 @@ public class Card : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Flip();
+        }
+    }
+
     // Flip the card around y-axis with animation.
     public void Flip()
     {
+        // Flip card
         isFlipped = !isFlipped;
         float targetAngle = isFlipped ? 179.9f : 0.1f;
-        LeanTween.rotateY(gameObject, targetAngle, flipAnimationLength);
+        LeanTween.rotateY(gameObject, targetAngle, flipAnimationLength).setEase(flipAnimationType);
+
+        // Trigger event
+        OnFlip?.Invoke(this, EventArgs.Empty);
     }
 
     // Check if two cards are same
