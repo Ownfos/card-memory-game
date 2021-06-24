@@ -6,8 +6,7 @@ using UnityEngine;
 //
 // Example)
 //  cardImageSet.images[0] should contain image
-//  for card '1' because CardNumber.One is 1.
-
+//  for card 'A' because CardNumber.A is 1.
 [System.Serializable]
 struct CardImageSet
 {
@@ -22,6 +21,7 @@ public class CardGenerator : MonoBehaviour
     //  cardImages[0] should contain a CardImageSet
     //  for spade, because CardGroup.Spade is 0.
     [SerializeField] private CardImageSet[] cardImages;
+
     // The prefab of card object with front and back face image.
     [SerializeField] private GameObject cardPrefab;
 
