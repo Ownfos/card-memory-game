@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
+// The group and number of a card (e.g. diamond 2)
 public struct CardType
 {
     // The shape of this card (e.g., CardGroup.Diamond)
@@ -29,20 +30,21 @@ public class Card : MonoBehaviour
     // Event that triggers whenever this card is flipped
     public event EventHandler OnFlip;
 
+    // The group and number of this card (e.g., spade jack)
+    public CardType Type { get; private set; }
+
+    // This variable is true when the card's front face is visible
+    public bool IsFlipped { get; private set; } = false;
+
     // The material of front face quad in child object.
     // The front face object has tag "FrontFace".
     private Material frontfaceMaterial;
 
-    private CardType type;
-
-    // This variable is true when the card's front face is visible
-    private bool isFlipped = false;
-
     // The time it takes to complete flipping motion (in seconds)
-    [SerializeField] float flipAnimationLength;
+    [SerializeField] private float flipAnimationLength;
 
     // The way flipping motion occurs
-    [SerializeField] LeanTweenType flipAnimationType;
+    [SerializeField] private LeanTweenType flipAnimationType;
 
     void Awake()
     {
@@ -57,6 +59,7 @@ public class Card : MonoBehaviour
         }
     }
 
+    // Test code for flipping all cards
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space))
@@ -69,8 +72,8 @@ public class Card : MonoBehaviour
     public void Flip()
     {
         // Flip card
-        isFlipped = !isFlipped;
-        float targetAngle = isFlipped ? 179.9f : 0.1f;
+        IsFlipped = !IsFlipped;
+        float targetAngle = IsFlipped ? 179.9f : 0.1f;
         LeanTween.rotateY(gameObject, targetAngle, flipAnimationLength).setEase(flipAnimationType);
 
         // Trigger event
@@ -80,13 +83,13 @@ public class Card : MonoBehaviour
     // Check if two cards are same
     public bool Equals(Card other)
     {
-        return type.Equals(other.type);
+        return Type.Equals(other.Type);
     }
 
     // Set its group and number, while initializing its front face to specified image
     public void Initialize(CardType type, Texture2D frontfaceTexture)
     {
-        this.type = type;
+        Type = type;
         SetFrontFaceTexture(frontfaceTexture);
     }
 
