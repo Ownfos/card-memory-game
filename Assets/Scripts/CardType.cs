@@ -1,4 +1,6 @@
-﻿// The group and number of a card (e.g. diamond 2)
+﻿using UnityEngine;
+
+// The group and number of a card (e.g. diamond 2)
 public struct CardType
 {
     // The shape of this card (e.g., CardGroup.Diamond)
@@ -12,8 +14,8 @@ public struct CardType
     {
         return new CardType
         {
-            group = (CardGroup)UnityEngine.Random.Range(0, (int)CardGroup.Length),
-            number = (CardNumber)UnityEngine.Random.Range(0, (int)CardNumber.Length)
+            group = (CardGroup)Random.Range(0, (int)CardGroup.Length),
+            number = (CardNumber)Random.Range(0, (int)CardNumber.Length)
         };
     }
 

@@ -13,7 +13,7 @@ public class Card : MonoBehaviour
     public bool IsFlipped { get; private set; } = false;
 
     // This variable is true when flipping animation is running
-    public bool IsFlipping { get; private set; } = false;
+    public bool IsFlipAnimRunning { get; private set; } = false;
 
     // This variable is set to true by Stage instance
     // when a matching pair is consecutively flipped.
@@ -30,7 +30,7 @@ public class Card : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            if (!IsFlipping)
+            if (!IsFlipAnimRunning)
             {
                 Flip();
             }
@@ -42,13 +42,13 @@ public class Card : MonoBehaviour
     {
         // Change state
         IsFlipped = !IsFlipped;
-        IsFlipping = true;
+        IsFlipAnimRunning = true;
 
         // Start flipping animation
         var targetAngle = IsFlipped ? 179.9f : 0.1f;
         LeanTween.rotateY(gameObject, targetAngle, FlipAnimationLength)
             .setEase(flipAnimationType)
-            .setOnComplete(() => IsFlipping = false);
+            .setOnComplete(() => IsFlipAnimRunning = false);
 
         // Trigger event
         OnFlip?.Invoke(this, this);

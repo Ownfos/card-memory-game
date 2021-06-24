@@ -42,12 +42,11 @@ public class Stage : MonoBehaviour
         cardSelector.OnCardSelect += OnCardSelectHandler;
     }
 
-    // Event handler for card selection event.
-    // Flips the selected card if it's in stable state
-    // (i.e., flip animation is over)
+    // Event handler for card selection event
     private void OnCardSelectHandler(object sender, Card card)
     {
-        if(!card.IsFlipping && !card.IsFlipped)
+        // Flip the card if it's showing back face and not moving
+        if(!card.IsFlipAnimRunning && !card.IsFlipped)
         {
             card.Flip();
         }
