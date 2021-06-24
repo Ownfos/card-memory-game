@@ -27,7 +27,8 @@ public class CardGenerator : MonoBehaviour
 
     private void Start()
     {
-        GenerateCard(CardGroup.Spade, CardNumber.One);
+        var card = GenerateCard(RandomCardGroup(), RandomCardNumber());
+        card.GetComponent<Card>().Flip();
     }
 
     // Create a card instance and set its front face image appropriately
@@ -36,11 +37,23 @@ public class CardGenerator : MonoBehaviour
         // Get the texture to use as front face image
         Texture2D frontface = FrontFaceTexture(group, number);
         
-        // Instantiate card object with corresponding front face image
+        // Instantiate card object and initialize it
         GameObject card = Instantiate(cardPrefab);
-        card.GetComponent<Card>().SetFrontFaceTexture(frontface);
+        card.GetComponent<Card>().Initialize(group, number, frontface);
 
         return card;
+    }
+
+    // Select random group from Spade, Diamond, Club, Heart.
+    public static CardGroup RandomCardGroup()
+    {
+        return (CardGroup)Random.Range(0, 4);
+    }
+
+    // Select random number from 1 to king
+    public static CardNumber RandomCardNumber()
+    {
+        return (CardNumber)Random.Range(0, 13);
     }
 
     // Return the texture for front face of card
