@@ -22,32 +22,20 @@ public class CardGenerator : MonoBehaviour
     //  cardImages[0] should contain a CardImageSet
     //  for spade, because CardGroup.Spade is 0.
     [SerializeField] private CardImageSet[] cardImages;
+    // The prefab of card object with front and back face image.
     [SerializeField] private GameObject cardPrefab;
 
-
     // Create a card instance and set its front face image appropriately
-    public GameObject GenerateCard(CardGroup group, CardNumber number)
+    public GameObject GenerateCard(CardType type)
     {
         // Get the texture to use as front face image
-        Texture2D frontface = FrontFaceTexture(group, number);
+        Texture2D frontface = FrontFaceTexture(type);
         
         // Instantiate card object and initialize it
         GameObject card = Instantiate(cardPrefab);
-        card.GetComponent<Card>().Initialize(group, number, frontface);
+        card.GetComponent<Card>().Initialize(type, frontface);
 
         return card;
-    }
-
-    // Select random group from Spade, Diamond, Club, Heart.
-    public static CardGroup RandomCardGroup()
-    {
-        return (CardGroup)Random.Range(0, 4);
-    }
-
-    // Select random number from 1 to king
-    public static CardNumber RandomCardNumber()
-    {
-        return (CardNumber)Random.Range(0, 13);
     }
 
     // Return the texture for front face of card.
@@ -55,8 +43,8 @@ public class CardGenerator : MonoBehaviour
     // Example)
     //  FrontFaceTexture(CardGroup.Spade, CardNumber.Jack) will return
     //  the card image corresponding to spade jack
-    private Texture2D FrontFaceTexture(CardGroup group, CardNumber number)
+    private Texture2D FrontFaceTexture(CardType type)
     {
-        return cardImages[((int)group)].images[(int)number];
+        return cardImages[((int)type.group)].images[(int)type.number];
     }
 }

@@ -1,15 +1,35 @@
 ﻿using UnityEngine;
 
+public struct CardType
+{
+    // The shape of this card (e.g., CardGroup.Diamond)
+    public CardGroup group;
+    // The number of this card (e.g., CardNumber.Two)
+    public CardNumber number;
+
+    // Check if two cards are same
+    public bool Equals(CardType other)
+    {
+        return group == other.group && number == other.number;
+    }
+
+    public static CardType RandomType()
+    {
+        return new CardType
+        {
+            group = (CardGroup)Random.Range(0, 4),
+            number = (CardNumber)Random.Range(0, 13)
+        };
+    }
+}
+
 public class Card : MonoBehaviour
 {
     // The material of front face quad in child object.
     // The front face object has tag "FrontFace".
     private Material frontfaceMaterial;
 
-    // The shape of this card (e.g., CardGroup.Diamond)
-    private CardGroup group;
-    // The number of this card (e.g., CardNumber.Two)
-    private CardNumber number;
+    private CardType type;
 
     // This variable is true when the card's front face is visible
     private bool isFlipped = false;
@@ -38,24 +58,17 @@ public class Card : MonoBehaviour
         LeanTween.rotateY(gameObject, targetAngle, flipAnimationLength);
     }
 
-    // Test if two cards are identical
+    // Check if two cards are same
     public bool Equals(Card other)
     {
-        return group == other.group && number == other.number;
+        return type.Equals(other.type);
     }
 
     // Set its group and number, while initializing its front face to specified image
-    public void Initialize(CardGroup group, CardNumber number, Texture2D frontfaceTexture)
+    public void Initialize(CardType type, Texture2D frontfaceTexture)
     {
-        SetCardType(group, number);
+        this.type = type;
         SetFrontFaceTexture(frontfaceTexture);
-    }
-
-    // Set the card group and number
-    private void SetCardType(CardGroup group, CardNumber number)
-    {
-        this.group = group;
-        this.number = number;
     }
 
     // Change the front face image of this card
