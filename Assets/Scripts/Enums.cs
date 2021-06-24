@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum CardGroup
 {
-    Spade = 0,
+    Spade,
     Club,
     Diamond,
     Heart
@@ -12,7 +12,7 @@ public enum CardGroup
 
 public enum CardNumber
 {
-    One = 0,
+    One,
     Two,
     Three,
     Four,

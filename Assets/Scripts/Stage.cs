@@ -8,34 +8,69 @@ public class Stage : MonoBehaviour
     // The array of position where cards get instantiated
     [SerializeField] private Vector3[] cardPositions;
 
+    // The Card components of each card created
+    private List<Card> cards;
+
     // Start is called before the first frame update
     void Start()
     {
-        // Get one card type for each card pair
-        int numCardTypeRequired = cardPositions.Length / 2;
-        HashSet<CardType> types = GenerateDifferentTypes(numCardTypeRequired);
+        CreateCards();
+        PlaceCards();
+    }
 
-        // Find CardGenerator component from scene
-        CardGenerator generator = GameObject.FindWithTag("CardGenerator").GetComponent<CardGenerator>();
-
+    // Change the transform of card instances in cards list
+    // by assigning random element from cardPositions array as position
+    private void PlaceCards()
+    {
         // Create a list of random index of cardPositions variable.
         // For each type we get from "types" variable, we will pop two index
         // and assign corresponding to the newly created Card instance.
         List<int> positionIndices = GenerateRandomIndexList();
 
-        // Instantiate a pair of card object for each type
-        // and place them according to the cardPositions
+        // Place cards on the corresponding position
         int nextPosition = 0;
-        foreach(CardType type in types)
+        foreach (Card card in cards)
         {
-            for(int i=0;i<2;++i)
+            card.transform.position = cardPositions[positionIndices[nextPosition++]];
+        }
+    }
+
+    // Create pair of cards required to fill all cardPositions
+    private void CreateCards()
+    {
+        // Create a list that will hold all card instances
+        cards = new List<Card>();
+
+        // Get a card type for each card pair
+        HashSet<CardType> types = GenerateDifferentTypes(cardPositions.Length / 2);
+
+        // Find CardGenerator component from scene
+        CardGenerator generator = GameObject.FindWithTag("CardGenerator").GetComponent<CardGenerator>();
+
+        // Create a pair of card for each card type
+        foreach (CardType type in types)
+        {
+            for (int i = 0; i < 2; ++i)
             {
-                GameObject card = generator.GenerateCard(type);
-                card.transform.position = cardPositions[positionIndices[nextPosition++]];
+                // Create and register card instance
+                Card card = generator.GenerateCard(type).GetComponent<Card>();
+                cards.Add(card);
+
+                // Attach flip event handler
+                card.OnFlip += OnFlipHandler;
             }
         }
     }
 
+    // Event handler for card flip event
+    private void OnFlipHandler(object sender, EventArgs e)
+    {
+        Debug.Log("Flip event occured");
+    }
+
+    // Create a list of integers from 0 to n-1
+    // where n is the length of cardPositions.
+    // This indices are used to randomly place cards.
     private List<int> GenerateRandomIndexList()
     {
         // Fill the list with integers 0 ~ n-1
@@ -71,7 +106,7 @@ public class Stage : MonoBehaviour
     {
         HashSet<CardType> result = new HashSet<CardType>();
 
-        while(result.Count < numTypes)
+        while (result.Count < numTypes)
         {
             result.Add(CardType.RandomType());
         }
