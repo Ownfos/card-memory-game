@@ -24,21 +24,6 @@ public class CardGenerator : MonoBehaviour
     [SerializeField] private CardImageSet[] cardImages;
     [SerializeField] private GameObject cardPrefab;
 
-    private Card card;
-
-    void Start()
-    {
-        card = GenerateCard(RandomCardGroup(), RandomCardNumber()).GetComponent<Card>();
-    }
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            card.Flip();
-        }
-    }
-
 
     // Create a card instance and set its front face image appropriately
     public GameObject GenerateCard(CardGroup group, CardNumber number)
