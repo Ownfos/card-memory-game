@@ -6,6 +6,7 @@ TagManager:
   tags:
   - FrontFace
   - CardGenerator
+  - Card
   layers:
   - Default
   - TransparentFX
