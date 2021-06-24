@@ -12,7 +12,7 @@ public enum CardGroup
 
 public enum CardNumber
 {
-    One,
+    A,
     Two,
     Three,
     Four,
