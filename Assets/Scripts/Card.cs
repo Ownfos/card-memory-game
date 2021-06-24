@@ -4,7 +4,7 @@ using UnityEngine;
 public class Card : MonoBehaviour
 {
     // Event that triggers whenever this card is flipped
-    public event EventHandler OnFlip;
+    public event EventHandler<Card> OnFlip;
 
     // The group and number of this card (e.g., spade jack)
     public CardType Type { get; private set; }
@@ -47,7 +47,7 @@ public class Card : MonoBehaviour
             .setOnComplete(() => IsFlipping = false);
 
         // Trigger event
-        OnFlip?.Invoke(this, EventArgs.Empty);
+        OnFlip?.Invoke(this, this);
     }
 
     // Set its group and number, while initializing its front face to specified image

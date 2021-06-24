@@ -81,9 +81,8 @@ public class Stage : MonoBehaviour
     }
 
     // Event handler for card flip event
-    private void OnFlipHandler(object sender, EventArgs e)
+    private void OnFlipHandler(object sender, Card card)
     {
-        var card = (Card)sender;
         if (card.IsFlipped)
         {
             Debug.Log("Flip event occured");
