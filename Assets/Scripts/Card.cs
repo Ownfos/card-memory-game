@@ -48,15 +48,7 @@ public class Card : MonoBehaviour
 
     void Awake()
     {
-        // Get the Material component from child object with tag "FrontFace"
-        for (int i = 0; i < transform.childCount; ++i)
-        {
-            GameObject child = transform.GetChild(i).gameObject;
-            if (child.tag.Equals("FrontFace"))
-            {
-                frontfaceMaterial = child.GetComponent<MeshRenderer>().material;
-            }
-        }
+        FindFrontFaceMaterial();
     }
 
     // Test code for flipping all cards
@@ -97,5 +89,18 @@ public class Card : MonoBehaviour
     private void SetFrontFaceTexture(Texture2D texture)
     {
         frontfaceMaterial.mainTexture = texture;
+    }
+
+    // Get the Material component from child object with tag "FrontFace"
+    private void FindFrontFaceMaterial()
+    {
+        for (int i = 0; i < transform.childCount; ++i)
+        {
+            GameObject child = transform.GetChild(i).gameObject;
+            if (child.tag.Equals("FrontFace"))
+            {
+                frontfaceMaterial = child.GetComponent<MeshRenderer>().material;
+            }
+        }
     }
 }
