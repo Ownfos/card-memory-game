@@ -9,6 +9,9 @@ public class Stage : MonoBehaviour
     // By default, we randomly select and place card pairs.
     public ICardConfiguration configuration = new RandomConfiguration();
 
+    // Event that triggers when all cards in this stage is correctly flipped
+    public event EventHandler OnStageComplete;
+
     // The Card components of each card in this stage
     private List<Card> cards;
 
@@ -33,6 +36,9 @@ public class Stage : MonoBehaviour
 
         // Register event handler
         RegisterCardSelectEventHandler();
+
+        // Sample code for stage completion detection
+        OnStageComplete += (sender, arg) => Debug.Log("Stage complete");
     }
 
     // Register event handler for card selection event
@@ -110,11 +116,30 @@ public class Stage : MonoBehaviour
         }
     }
 
-    // Mark flipped pair of card as correct
+    // Mark flipped pair of card as correct and handle stage completion
     private void HandleMatch(Card card1, Card card2)
     {
         card1.MarkAsCorrectlyFlipped();
         card2.MarkAsCorrectlyFlipped();
+
+        if(CheckStageCompletion())
+        {
+            OnStageComplete?.Invoke(this, EventArgs.Empty);
+        }
+    }
+
+    // Returns true if all cards are correctly flipped
+    private bool CheckStageCompletion()
+    {
+        foreach(var card in cards)
+        {
+            if (!card.IsCorrectlyFlipped)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     // After some delay, flip back each card
