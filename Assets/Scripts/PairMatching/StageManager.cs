@@ -12,6 +12,9 @@ public class StageManager : MonoBehaviour
     // on stage creation and completion.
     [SerializeField] private LeanTweenType stageSwapEffect;
 
+    // Amount of time given before timeout happens
+    [SerializeField] private float timerDuration;
+
     // Index of next stage to propose
     private int nextStageIndex = 0;
 
@@ -22,12 +25,17 @@ public class StageManager : MonoBehaviour
         StartFirstStage();
     }
 
-    // Reset score and start first stage
+    // Initialize score, timer, and first stage
     private void StartFirstStage()
     {
         // Reset score to zero
         var scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
         scoreManager.ResetScore();
+
+        // Initialize timer
+        var timerManager = GameObject.FindGameObjectWithTag("TimerManager").GetComponent<TimerManager>();
+        timerManager.StartTimer(timerDuration);
+        timerManager.OnTimerEnd += OnTimerEndHandler;
 
         // Activate first stage
         StartCoroutine(StartNextStage());
@@ -39,6 +47,12 @@ public class StageManager : MonoBehaviour
         {
             stage.gameObject.SetActive(false);
         }
+    }
+
+    // Directly end this game and move to score screen
+    private void OnTimerEndHandler(object sender, EventArgs e)
+    {
+        StartCoroutine(HandleGameCompletion());
     }
 
     // Load next stage or move to score room

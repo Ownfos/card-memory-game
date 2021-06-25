@@ -13,6 +13,7 @@ TagManager:
   - SoundEffectPlayer
   - ScoreManager
   - TimerManager
+  - FillBar
   layers:
   - Default
   - TransparentFX
