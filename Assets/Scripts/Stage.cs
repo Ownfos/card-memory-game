@@ -23,7 +23,7 @@ public class Stage : MonoBehaviour
     // configuration strategy is correctly set.
     void Awake()
     {
-        Initialize();
+        //Initialize();
     }
 
     // Setup cards according to configuration strategy
@@ -36,12 +36,6 @@ public class Stage : MonoBehaviour
 
         // Register event handler
         RegisterCardSelectEventHandler();
-
-        // Sample code for stage completion detection
-        var st = GameObject.FindGameObjectWithTag("SceneTransition").GetComponent<SceneTransition>();
-        OnStageComplete += (sender, arg) => st.MoveToScene("TitleScreen");
-        OnStageComplete += (sender, arg) => Debug.Log("Stage complete");
-
     }
 
     // Register event handler for card selection event
@@ -55,9 +49,19 @@ public class Stage : MonoBehaviour
     private void OnCardSelectHandler(object sender, Card card)
     {
         // Flip the card if it's showing back face and not moving
-        if(!card.IsFlipAnimRunning && !card.IsFlipped)
+        if(!card.IsFlipAnimRunning)
         {
-            card.Flip();
+            // New card is selected
+            if (!card.IsFlipped)
+            {
+                card.Flip();
+            }
+            // The card was relelected
+            else if (card == lastFlippedCard)
+            {
+                lastFlippedCard = null;
+                card.Flip();
+            }
         }
     }
 

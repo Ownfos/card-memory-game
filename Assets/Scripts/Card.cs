@@ -20,7 +20,7 @@ public class Card : MonoBehaviour
     public bool IsCorrectlyFlipped { get; private set; } = false;
 
     // The time it takes to complete flipping motion (in seconds)
-    public float FlipAnimationLength { get; private set; } = 1.5f;
+    public float FlipAnimationLength { get; private set; } = 1.0f;
 
     // The way flipping motion occurs
     [SerializeField] private LeanTweenType flipAnimationType;

@@ -6,7 +6,7 @@ public class ClickMethodFactory
 {
     public static IClickMethod GetInputMethod()
     {
-        return new ClickByTouch();
-        //return new ClickByMouse();
+        //return new ClickByTouch();
+        return new ClickByMouse();
     }
 }
