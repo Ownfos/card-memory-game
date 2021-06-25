@@ -25,18 +25,6 @@ public class Card : MonoBehaviour
     // The way flipping motion occurs
     [SerializeField] private LeanTweenType flipAnimationType;
 
-    // Test code for flipping all cards
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            if (!IsFlipAnimRunning)
-            {
-                Flip();
-            }
-        }
-    }
-
     // Flip the card around y-axis with animation.
     public void Flip()
     {
@@ -50,6 +38,11 @@ public class Card : MonoBehaviour
             .setEase(flipAnimationType)
             .setOnComplete(() => IsFlipAnimRunning = false);
 
+        // Make flipped cards move forward slightly
+        var targetOffset = IsFlipped ? -0.5f : 0.0f;
+        LeanTween.moveLocalZ(gameObject, targetOffset, FlipAnimationLength)
+            .setEase(flipAnimationType);
+
         // Trigger event
         OnFlip?.Invoke(this, this);
     }
@@ -61,10 +54,19 @@ public class Card : MonoBehaviour
         SetFrontFaceTexture(frontfaceTexture);
     }
 
-    // Set IsCorrectlyFlipped to true
+    // Fix this card flipped
     public void MarkAsCorrectlyFlipped()
     {
+        // Set flag to true
         IsCorrectlyFlipped = true;
+
+        // Move the card back to where it was.
+        // Note that cards move front when they are flipped.
+        // This allows player to distinguish between correctly
+        // flipped cards and not correctly flipped cards.
+        LeanTween.moveLocalZ(gameObject, 0.0f, FlipAnimationLength)
+            .setDelay(FlipAnimationLength * 0.5f)
+            .setEase(flipAnimationType);
     }
 
     // Change the front face image of this card

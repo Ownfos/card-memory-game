@@ -17,30 +17,20 @@ public class SceneTransition : MonoBehaviour
     // the alpha value of this image.
     [SerializeField] private Image blackScreen;
 
-    void Awake()
+    void Start()
     {
-        // Allow using one SceneTransition instance across all scenes
-        DontDestroyOnLoad(gameObject);
-
-        // Make sure there is only one instance of SceneTransition
-        if (FindObjectsOfType<SceneTransition>().Length > 1)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            // Being the first SceneTransition instance means
-            // that the game has just began and our main screen is loaded.
-            // Welcome our player with fancy black->white fade in effect!
-            FadeIn();
-        }
+        // This line is called only once when Title Screen scene is first loaded.
+        // Welcome our player with fade in effect.
+        FadeIn();
     }
 
+    // Start scene transition with fade in/out effect
     public void MoveToScene(string sceneName)
     {
         StartCoroutine(StartTransition(sceneName));
     }
     
+    // Gradually make the screen black
     public void FadeOut()
     {
         LeanTween.value(gameObject, 0, 1, fadeTime).setOnUpdate((float val) =>
@@ -51,6 +41,7 @@ public class SceneTransition : MonoBehaviour
         }).setEase(fadeType);
     }
 
+    // Gradually make the screen white (i.e., remove the black cover)
     public void FadeIn()
     {
         LeanTween.value(gameObject, 1, 0, fadeTime).setOnUpdate((float val) =>
@@ -61,6 +52,7 @@ public class SceneTransition : MonoBehaviour
         }).setEase(fadeType);
     }
 
+    // A coroutine that performs fade out -> load scene -> fade in consecutively
     private IEnumerator StartTransition(string sceneName)
     {
         FadeOut();
