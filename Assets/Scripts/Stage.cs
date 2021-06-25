@@ -160,7 +160,7 @@ public class Stage : MonoBehaviour
     // and then flip the card back
     private IEnumerator FlipBack(Card card)
     {
-        yield return new WaitForSeconds(card.FlipAnimationLength * 1.2f);
+        yield return new WaitForSeconds(card.FlipAnimationLength);
         card.Flip();
     }
 }
