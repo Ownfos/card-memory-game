@@ -74,7 +74,9 @@ public class StageManager : MonoBehaviour
     private IEnumerator HandleGameCompletion()
     {
         yield return new WaitForSeconds(0.5f);
-        GameObject.FindGameObjectWithTag("SceneTransition").GetComponent<SceneTransition>().MoveToScene("ScoreScreen");
+        GameObject.FindGameObjectWithTag("SceneTransition")
+            .GetComponent<SceneTransition>()
+            .MoveToScene("ScoreScreen");
     }
 
     private IEnumerator StartNextStage()

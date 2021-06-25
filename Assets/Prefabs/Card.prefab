@@ -141,7 +141,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flipAnimationType: 18
-  flipTintColor: {r: 1, g: 0.9718364, b: 0.6556604, a: 0}
 --- !u!65 &4088746396418507207
 BoxCollider:
   m_ObjectHideFlags: 0

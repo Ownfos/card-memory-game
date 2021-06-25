@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class SceneTransition : MonoBehaviour
 {
+    public delegate void SceneTransitionEndHandler();
+
     // Time it takes to finish fade in/out effect
     [SerializeField] private float fadeTime;
 
@@ -24,10 +26,17 @@ public class SceneTransition : MonoBehaviour
         FadeIn();
     }
 
-    // Start scene transition with fade in/out effect
+
+    // Start scene transition with fade in/out effect without event handler
     public void MoveToScene(string sceneName)
     {
-        StartCoroutine(StartTransition(sceneName));
+        StartCoroutine(StartTransition(sceneName, () => { }));
+    }
+
+    // Start scene transition with fade in/out effect
+    public void MoveToScene(string sceneName, SceneTransitionEndHandler handler)
+    {
+        StartCoroutine(StartTransition(sceneName, handler));
     }
     
     // Gradually make the screen black
@@ -53,7 +62,7 @@ public class SceneTransition : MonoBehaviour
     }
 
     // A coroutine that performs fade out -> load scene -> fade in consecutively
-    private IEnumerator StartTransition(string sceneName)
+    private IEnumerator StartTransition(string sceneName, SceneTransitionEndHandler handler)
     {
         FadeOut();
         yield return new WaitForSeconds(fadeTime);
