@@ -12,6 +12,18 @@ public class CardSelector : MonoBehaviour
     // Click detection method (mouse / touch screen / replay)
     public IClickMethod clickMethod = ClickMethodFactory.GetInputMethod();
 
+    // Sound effect to play when a card is selected
+    [SerializeField] private AudioClip selectSound;
+
+    private void Awake()
+    {
+        // Find the component that handles sound effects
+        var soundPlayer = GameObject.FindGameObjectWithTag("SoundEffectPlayer").GetComponent<SoundEffectPlayer>();
+
+        // Play sound effect when a card is selected
+        OnCardSelect += (sender, arg) => soundPlayer.Play(selectSound);
+    }
+
     // Update is called once per frame
     void Update()
     {

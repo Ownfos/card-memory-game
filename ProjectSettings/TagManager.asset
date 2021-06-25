@@ -10,6 +10,7 @@ TagManager:
   - CardSelector
   - FadeBlackScreen
   - SceneTransition
+  - SoundEffectPlayer
   layers:
   - Default
   - TransparentFX
