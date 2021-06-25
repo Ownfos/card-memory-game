@@ -72,22 +72,7 @@ public class Card : MonoBehaviour
     // Change the front face image of this card
     private void SetFrontFaceTexture(Texture2D texture)
     {
-        var frontfaceMaterial = FindFrontFaceMaterial();
-        frontfaceMaterial.mainTexture = texture;
-    }
-
-    // Get the Material component from child object with tag "FrontFace"
-    private Material FindFrontFaceMaterial()
-    {
-        for (int i = 0; i < transform.childCount; ++i)
-        {
-            var child = transform.GetChild(i).gameObject;
-            if (child.CompareTag("FrontFace"))
-            {
-                return child.GetComponent<MeshRenderer>().material;
-            }
-        }
-
-        return null;
+        var frontfaceTextureController = GetComponentInChildren<MeshTextureController>();
+        frontfaceTextureController.SetTexture(texture);
     }
 }
