@@ -4,22 +4,29 @@ using UnityEngine;
 
 public class TitleScreen : MonoBehaviour
 {
-    private IClickMethod clickMethod = ClickMethodFactory.GetInputMethod();
-    private bool transitionHappening = false;
-    private SceneTransition sceneTransition;
+    // Boolean flag that prevents scene transition
+    // coroutine being called multiple times.
+    private bool isStartButtonClicked = false;
 
-    private void Awake()
+    // Event handler for start button click
+    public void OnStartClick()
     {
-        sceneTransition = GameObject.FindGameObjectWithTag("SceneTransition").GetComponent<SceneTransition>();
+        // If this is the initial click event
+        if (!isStartButtonClicked)
+        {
+            // Mark it as clicked
+            isStartButtonClicked = true;
+
+            // Move to MainGame scene
+            GameObject.FindGameObjectWithTag("SceneTransition")
+                .GetComponent<SceneTransition>()
+                .MoveToScene("MainGame");
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    // Event handler for quit button click
+    public void OnQuitClick()
     {
-        if (clickMethod.ClickHappened() && !transitionHappening)
-        {
-            transitionHappening = true;
-            sceneTransition.MoveToScene("MainGame");
-        }
+        Application.Quit();
     }
 }

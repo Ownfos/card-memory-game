@@ -47,7 +47,7 @@ public class StageManager : MonoBehaviour
         // All stages are comlete
         if (nextStageIndex >= stages.Count)
         {
-            HandleGameCompletion();
+            StartCoroutine(HandleGameCompletion());
         }
         // We have more stages left
         else
@@ -56,10 +56,11 @@ public class StageManager : MonoBehaviour
         }
     }
 
-    private void HandleGameCompletion()
+    // After some delay, move to the ScoreScreen scene
+    private IEnumerator HandleGameCompletion()
     {
-        Debug.Log("all stages are complete!");
-        GameObject.FindGameObjectWithTag("SceneTransition").GetComponent<SceneTransition>().MoveToScene("TitleScreen");
+        yield return new WaitForSeconds(0.5f);
+        GameObject.FindGameObjectWithTag("SceneTransition").GetComponent<SceneTransition>().MoveToScene("ScoreScreen");
     }
 
     private IEnumerator StartNextStage()
