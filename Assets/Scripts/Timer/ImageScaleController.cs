@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// A component that manages image size
+// A component that manages image size through RectTransform scale.
+// Used to control the y-scale of fill bar of timer UI.
 [RequireComponent(typeof(RectTransform))]
 [RequireComponent(typeof(Image))]
 public class ImageScaleController : MonoBehaviour

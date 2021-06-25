@@ -32,7 +32,7 @@ public class Card : MonoBehaviour
         IsFlipped = !IsFlipped;
         IsFlipAnimRunning = true;
 
-        // Start flipping animation
+        // Begin rotating card
         StartFlipAnimation(IsFlipped ? 179.9f : 0.1f);
 
         // Make flipped cards move forward slightly

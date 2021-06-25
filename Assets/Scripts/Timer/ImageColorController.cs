@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// A component that manages image color
+// A component that manages image color.
+// Used to control the background bar color of timer UI.
 [RequireComponent(typeof(Image))]
 public class ImageColorController : MonoBehaviour
 {
