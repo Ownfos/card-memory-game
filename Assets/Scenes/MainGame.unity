@@ -337,7 +337,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -377,7 +377,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 1
+  m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -645,16 +645,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Card
-      objectReference: {fileID: 0}
-    - target: {fileID: 4022713528887131406, guid: 9a5bf0f713564964b9a7517ed62b022f,
-        type: 3}
-      propertyPath: flipAnimationType
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 4022713528887131406, guid: 9a5bf0f713564964b9a7517ed62b022f,
-        type: 3}
-      propertyPath: flipAnimationLength
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4022713528887131407, guid: 9a5bf0f713564964b9a7517ed62b022f,
         type: 3}
