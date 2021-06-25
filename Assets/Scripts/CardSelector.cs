@@ -10,7 +10,7 @@ public class CardSelector : MonoBehaviour
     public event EventHandler<Card> OnCardSelect;
 
     // Click detection method (mouse / touch screen / replay)
-    public IClickMethod clickMethod = new ClickByMouse();
+    public IClickMethod clickMethod = InputMethodFactory.GetInputMethod();
 
     // Update is called once per frame
     void Update()

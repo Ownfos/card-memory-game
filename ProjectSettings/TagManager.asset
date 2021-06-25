@@ -8,6 +8,8 @@ TagManager:
   - Card
   - FrontFaceImages
   - CardSelector
+  - FadeBlackScreen
+  - SceneTransition
   layers:
   - Default
   - TransparentFX
