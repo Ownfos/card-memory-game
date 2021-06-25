@@ -41,7 +41,7 @@ public class Stage : MonoBehaviour
 
         // Attach handlers for pair mismatch event
         OnPairMismatch += OnPairMismatchHandler;
-        OnPairMismatch += scoreManager.OnPairMatchHandler;
+        OnPairMismatch += scoreManager.OnPairMismatchHandler;
         OnPairMismatch += (sender, arg) => soundPlayer.Play(SoundEffect.PairMismatch);
 
         // Attach handlers for stage completion event

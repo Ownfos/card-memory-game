@@ -17,7 +17,7 @@ public class ScoreManager : MonoBehaviour
             if (_score != value)
             {
                 _score = value;
-                OnScoreChange.Invoke(this, _score);
+                OnScoreChange?.Invoke(this, _score);
             }
         } 
     }
