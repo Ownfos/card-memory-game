@@ -375,6 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b79aedfa5de64a458ed356608372309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectSound: {fileID: 8300000, guid: 732737b0860286946a0ee53be4ba7ace, type: 3}
 --- !u!4 &203625154
 Transform:
   m_ObjectHideFlags: 0
@@ -1861,8 +1862,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1325708808}
-  - component: {fileID: 1325708807}
   - component: {fileID: 1325708806}
+  - component: {fileID: 1325708807}
   m_Layer: 0
   m_Name: SoundEffectPlayer
   m_TagString: SoundEffectPlayer
@@ -1978,6 +1979,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a235369fd055aa498a9384a08f685d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  soundEffects:
+  - {fileID: 8300000, guid: 732737b0860286946a0ee53be4ba7ace, type: 3}
+  - {fileID: 8300000, guid: f1c1ff92187b1c34893beaf412578761, type: 3}
+  - {fileID: 8300000, guid: f6cee6c560b57bc498c9174856b9136d, type: 3}
 --- !u!4 &1325708808
 Transform:
   m_ObjectHideFlags: 0

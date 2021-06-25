@@ -12,18 +12,34 @@ public class Stage : MonoBehaviour
     // Event that triggers when all cards in this stage is correctly flipped
     public event EventHandler OnStageComplete;
 
+    // Event that triggers when two cards of same type are consecutively flipped
+    public event EventHandler OnPairMatch;
+
+    // Event that triggers when two cards of different types are consecutively flipped
+    public event EventHandler OnPairMismatch;
+
     // The Card components of each card in this stage
     private List<Card> cards;
 
-    // The Card component of lastly flipped card instance
-    private Card lastFlippedCard = null;
+    // The Card component of lastly flipped card instances
+    private Card firstFlippedCard = null;
+    private Card secondFlippedCard = null;
 
-    // Test code that initialize stage rightaway after creation.
-    // In real application, Initialize should be called manually after
-    // configuration strategy is correctly set.
+
     void Awake()
     {
-        //Initialize();
+        // Find the component that handles sound effects
+        var soundPlayer = GameObject.FindGameObjectWithTag("SoundEffectPlayer").GetComponent<SoundEffectPlayer>();
+
+        // Attach handlers for pair match event
+        OnPairMatch += OnPairMatchHandler;
+        OnPairMatch += (sender, arg) => soundPlayer.Play(SoundEffect.PairMatch);
+
+        // Attach handlers for pair mismatch event
+        OnPairMismatch += OnPairMismatchHandler;
+
+        // Attach handlers for stage completion event
+        OnStageComplete += (sender, arg) => soundPlayer.Play(SoundEffect.StageComplete);
     }
 
     // Setup cards according to configuration strategy
@@ -57,9 +73,9 @@ public class Stage : MonoBehaviour
                 card.Flip();
             }
             // The card was relelected
-            else if (card == lastFlippedCard)
+            else if (card == firstFlippedCard)
             {
-                lastFlippedCard = null;
+                firstFlippedCard = null;
                 card.Flip();
             }
         }
@@ -103,31 +119,36 @@ public class Stage : MonoBehaviour
         if (card.IsFlipped)
         {
             // First card is flipped
-            if (lastFlippedCard == null)
+            if (firstFlippedCard == null)
             {
-                lastFlippedCard = card;
+                firstFlippedCard = card;
             }
             // Second card is flipped
             else
             {
-                if (lastFlippedCard.Type.Equals(card.Type))
+                // Handle events
+                secondFlippedCard = card;
+                if (firstFlippedCard.Type.Equals(card.Type))
                 {
-                    HandleMatch(lastFlippedCard, card);
+                    OnPairMatch.Invoke(this, EventArgs.Empty);
                 }
                 else
                 {
-                    HandleMismatch(lastFlippedCard, card);
+                    OnPairMismatch.Invoke(this, EventArgs.Empty);
                 }
-                lastFlippedCard = null;
+
+                // Reset card references
+                firstFlippedCard = null;
+                secondFlippedCard = null;
             }
         }
     }
 
     // Mark flipped pair of card as correct and handle stage completion
-    private void HandleMatch(Card card1, Card card2)
+    private void OnPairMatchHandler(object sender, EventArgs e)
     {
-        card1.MarkAsCorrectlyFlipped();
-        card2.MarkAsCorrectlyFlipped();
+        firstFlippedCard.MarkAsCorrectlyFlipped();
+        secondFlippedCard.MarkAsCorrectlyFlipped();
 
         if(CheckStageCompletion())
         {
@@ -150,10 +171,10 @@ public class Stage : MonoBehaviour
     }
 
     // After some delay, flip back each card
-    private void HandleMismatch(Card card1, Card card2)
+    private void OnPairMismatchHandler(object sender, EventArgs e)
     {
-        StartCoroutine(FlipBack(card1));
-        StartCoroutine(FlipBack(card2));
+        StartCoroutine(FlipBack(firstFlippedCard));
+        StartCoroutine(FlipBack(secondFlippedCard));
     }
 
     // Make sure that current flip animation is done

@@ -21,7 +21,7 @@ public class CardSelector : MonoBehaviour
         var soundPlayer = GameObject.FindGameObjectWithTag("SoundEffectPlayer").GetComponent<SoundEffectPlayer>();
 
         // Play sound effect when a card is selected
-        OnCardSelect += (sender, arg) => soundPlayer.Play(selectSound);
+        OnCardSelect += (sender, arg) => soundPlayer.Play(SoundEffect.CardSelect);
     }
 
     // Update is called once per frame

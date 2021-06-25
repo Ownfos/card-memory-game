@@ -28,3 +28,10 @@ public enum CardNumber
     King,
     Length
 }
+
+public enum SoundEffect
+{
+    CardSelect,
+    PairMatch,
+    StageComplete
+}

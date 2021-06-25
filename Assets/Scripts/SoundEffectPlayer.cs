@@ -9,6 +9,14 @@ public class SoundEffectPlayer : MonoBehaviour
 {
     private AudioSource audioSource;
 
+    // Audio clipes for each SoundEffect enum.
+    // The value of enum should match the index.
+    //
+    // Example)
+    //  soundEffects[0] should contain card select effect
+    //  because SoundEffect.CardSelect is 0.
+    [SerializeField] private List<AudioClip> soundEffects;
+
     // Find and save AudioSource component
     private void Awake()
     {
@@ -16,8 +24,8 @@ public class SoundEffectPlayer : MonoBehaviour
     }
 
     // Play the sound effect once
-    public void Play(AudioClip clip)
+    public void Play(SoundEffect effect)
     {
-        audioSource.PlayOneShot(clip);
+        audioSource.PlayOneShot(soundEffects[(int)effect]);
     }
 }
