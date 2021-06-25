@@ -428,7 +428,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 548c8021ddecb4546a559e4ddd7c1ae3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeTime: 2
+  fadeTime: 1.5
+  fadeType: 18
   blackScreen: {fileID: 966012164}
 --- !u!4 &1370488776
 Transform:

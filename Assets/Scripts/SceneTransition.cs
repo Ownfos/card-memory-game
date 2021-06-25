@@ -9,6 +9,9 @@ public class SceneTransition : MonoBehaviour
     // Time it takes to finish fade in/out effect
     [SerializeField] private float fadeTime;
 
+    // Easing type that controls how fading happens
+    [SerializeField] private LeanTweenType fadeType;
+
     // The black image that covers entire screen.
     // Fade effect is implemented through modifying
     // the alpha value of this image.
@@ -45,7 +48,7 @@ public class SceneTransition : MonoBehaviour
             Color c = blackScreen.color;
             c.a = val;
             blackScreen.color = c;
-        });
+        }).setEase(fadeType);
     }
 
     public void FadeIn()
@@ -55,7 +58,7 @@ public class SceneTransition : MonoBehaviour
             Color c = blackScreen.color;
             c.a = val;
             blackScreen.color = c;
-        });
+        }).setEase(fadeType);
     }
 
     private IEnumerator StartTransition(string sceneName)
