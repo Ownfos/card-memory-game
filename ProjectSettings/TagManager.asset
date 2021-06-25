@@ -12,6 +12,7 @@ TagManager:
   - SceneTransition
   - SoundEffectPlayer
   - ScoreManager
+  - TimerManager
   layers:
   - Default
   - TransparentFX

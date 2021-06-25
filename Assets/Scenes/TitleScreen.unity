@@ -248,49 +248,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!1 &150422209
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 150422212}
-  - component: {fileID: 150422211}
-  m_Layer: 0
-  m_Name: TitleScreen
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &150422211
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 150422209}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 219364642b2997940b37680be509dcb0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &150422212
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 150422209}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 277, y: 154.3, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &355734653
 GameObject:
   m_ObjectHideFlags: 0
@@ -671,6 +628,7 @@ GameObject:
   - component: {fileID: 1530332806}
   - component: {fileID: 1530332805}
   - component: {fileID: 1530332804}
+  - component: {fileID: 1530332807}
   m_Layer: 5
   m_Name: Quit
   m_TagString: Untagged
@@ -741,8 +699,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 150422211}
-        m_MethodName: OnQuitClick
+      - m_Target: {fileID: 1530332807}
+        m_MethodName: OnButtonClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -789,6 +747,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1530332802}
   m_CullTransparentMesh: 0
+--- !u!114 &1530332807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530332802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 219364642b2997940b37680be509dcb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1540919827
 GameObject:
   m_ObjectHideFlags: 0
@@ -1411,7 +1381,7 @@ Transform:
   - {fileID: 713085481}
   - {fileID: 1370488776}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1913566563
 MonoBehaviour:
@@ -1437,6 +1407,7 @@ GameObject:
   - component: {fileID: 2068999595}
   - component: {fileID: 2068999594}
   - component: {fileID: 2068999593}
+  - component: {fileID: 2068999596}
   m_Layer: 5
   m_Name: Start
   m_TagString: Untagged
@@ -1507,15 +1478,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 150422211}
-        m_MethodName: OnStartClick
-        m_Mode: 1
+      - m_Target: {fileID: 2068999596}
+        m_MethodName: OnButtonClick
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: MainGame
           m_BoolArgument: 0
         m_CallState: 1
 --- !u!114 &2068999594
@@ -1555,3 +1526,15 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2068999591}
   m_CullTransparentMesh: 0
+--- !u!114 &2068999596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068999591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e104e6e55288a244a8e76418cfbb840e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

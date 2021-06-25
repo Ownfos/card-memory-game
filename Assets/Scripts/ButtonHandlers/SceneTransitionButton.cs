@@ -2,31 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TitleScreen : MonoBehaviour
+public class SceneTransitionButton : MonoBehaviour
 {
     // Boolean flag that prevents scene transition
     // coroutine being called multiple times.
-    private bool isStartButtonClicked = false;
+    private bool isClicked = false;
 
-    // Event handler for start button click
-    public void OnStartClick()
+    // Event handler for scene transition button click
+    public void OnButtonClick(string sceneName)
     {
         // If this is the initial click event
-        if (!isStartButtonClicked)
+        if (!isClicked)
         {
             // Mark it as clicked
-            isStartButtonClicked = true;
+            isClicked = true;
 
             // Move to MainGame scene
             GameObject.FindGameObjectWithTag("SceneTransition")
                 .GetComponent<SceneTransition>()
-                .MoveToScene("MainGame");
+                .MoveToScene(sceneName);
         }
-    }
-
-    // Event handler for quit button click
-    public void OnQuitClick()
-    {
-        Application.Quit();
     }
 }

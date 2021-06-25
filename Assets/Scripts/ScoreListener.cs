@@ -8,17 +8,20 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Text))]
 public class ScoreListener : MonoBehaviour
 {
-    private Text text;
+    // Text
+    private Text scoreText;
 
     private void Awake()
     {
         // Find component that displays score
-        text = GetComponent<Text>();
+        scoreText = GetComponent<Text>();
 
         // Register score update handler
         var scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
         scoreManager.OnScoreChange += UpdateScoreText;
 
+        // Initialize score text
+        scoreText.text = $"{scoreManager.Score}";
     }
 
     private void OnDestroy()
@@ -31,6 +34,6 @@ public class ScoreListener : MonoBehaviour
     // Change the content of Text component to latest score value
     private void UpdateScoreText(object sender, int score)
     {
-        text.text = $"{score}";
+        scoreText.text = $"{score}";
     }
 }
