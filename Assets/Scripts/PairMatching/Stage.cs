@@ -28,15 +28,20 @@ public class Stage : MonoBehaviour
 
     void Awake()
     {
+        // Find the component that handles score
+        var scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
+
         // Find the component that handles sound effects
         var soundPlayer = GameObject.FindGameObjectWithTag("SoundEffectPlayer").GetComponent<SoundEffectPlayer>();
 
         // Attach handlers for pair match event
         OnPairMatch += OnPairMatchHandler;
+        OnPairMatch += scoreManager.OnPairMatchHandler;
         OnPairMatch += (sender, arg) => soundPlayer.Play(SoundEffect.PairMatch);
 
         // Attach handlers for pair mismatch event
         OnPairMismatch += OnPairMismatchHandler;
+        OnPairMismatch += scoreManager.OnPairMatchHandler;
         OnPairMismatch += (sender, arg) => soundPlayer.Play(SoundEffect.PairMismatch);
 
         // Attach handlers for stage completion event

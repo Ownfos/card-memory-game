@@ -11,6 +11,7 @@ TagManager:
   - FadeBlackScreen
   - SceneTransition
   - SoundEffectPlayer
+  - ScoreManager
   layers:
   - Default
   - TransparentFX

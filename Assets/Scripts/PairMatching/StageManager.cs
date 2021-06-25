@@ -15,10 +15,21 @@ public class StageManager : MonoBehaviour
     // Index of next stage to propose
     private int nextStageIndex = 0;
 
-    // Load first stage
+    // Start main game
     void Awake()
     {
         DeactivateAllStages();
+        StartFirstStage();
+    }
+
+    // Reset score and start first stage
+    private void StartFirstStage()
+    {
+        // Reset score to zero
+        var scoreManager = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>();
+        scoreManager.ResetScore();
+
+        // Activate first stage
         StartCoroutine(StartNextStage());
     }
 
