@@ -19,6 +19,9 @@ public class SceneTransition : MonoBehaviour
     // the alpha value of this image.
     [SerializeField] private Image blackScreen;
 
+    // This flag is true only when MoveToScene() function and its coroutine are running
+    private bool isTransitionOngoing = false;
+
     void Start()
     {
         // This line is called only once when Title Screen scene is first loaded.
@@ -64,6 +67,15 @@ public class SceneTransition : MonoBehaviour
     // A coroutine that performs fade out -> load scene -> fade in consecutively
     private IEnumerator StartTransition(string sceneName, SceneTransitionEndHandler handler)
     {
+        // Ignore transition if other transition is happening
+        if (isTransitionOngoing)
+        {
+            yield break;
+        }
+
+        // Set transition flag to true
+        isTransitionOngoing = true;
+
         FadeOut();
         yield return new WaitForSeconds(fadeTime);
 
@@ -71,5 +83,8 @@ public class SceneTransition : MonoBehaviour
 
         FadeIn();
         yield return new WaitForSeconds(fadeTime);
+
+        // Set transition flag to false
+        isTransitionOngoing = false;
     }
 }

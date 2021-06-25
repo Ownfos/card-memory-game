@@ -15,6 +15,9 @@ public class StageManager : MonoBehaviour
     // Amount of time given before timeout happens
     [SerializeField] private float timerDuration;
 
+    // Stage initialization strategy
+    private ICardConfiguration configutation = new RandomConfiguration();
+
     // Index of next stage to propose
     private int nextStageIndex = 0;
 
@@ -97,7 +100,7 @@ public class StageManager : MonoBehaviour
         // Initialize next stage
         var nextStage = stages[nextStageIndex++];
         nextStage.gameObject.SetActive(true);
-        nextStage.configuration = new RandomConfiguration();
+        nextStage.configuration = configutation;
         nextStage.Initialize();
 
         // Set pop up animation for new stage
