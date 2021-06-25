@@ -37,6 +37,7 @@ public class Stage : MonoBehaviour
 
         // Attach handlers for pair mismatch event
         OnPairMismatch += OnPairMismatchHandler;
+        OnPairMismatch += (sender, arg) => soundPlayer.Play(SoundEffect.PairMismatch);
 
         // Attach handlers for stage completion event
         OnStageComplete += (sender, arg) => soundPlayer.Play(SoundEffect.StageComplete);
@@ -65,19 +66,9 @@ public class Stage : MonoBehaviour
     private void OnCardSelectHandler(object sender, Card card)
     {
         // Flip the card if it's showing back face and not moving
-        if(!card.IsFlipAnimRunning)
+        if(!card.IsFlipAnimRunning && !card.IsFlipped)
         {
-            // New card is selected
-            if (!card.IsFlipped)
-            {
-                card.Flip();
-            }
-            // The card was relelected
-            else if (card == firstFlippedCard)
-            {
-                firstFlippedCard = null;
-                card.Flip();
-            }
+            card.Flip();
         }
     }
 

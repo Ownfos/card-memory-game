@@ -33,5 +33,6 @@ public enum SoundEffect
 {
     CardSelect,
     PairMatch,
-    StageComplete
+    StageComplete,
+    PairMismatch
 }
