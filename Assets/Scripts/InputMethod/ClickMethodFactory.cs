@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputMethodFactory
+public class ClickMethodFactory
 {
     public static IClickMethod GetInputMethod()
     {
-        return new ClickByMouse();
+        return new ClickByTouch();
+        //return new ClickByMouse();
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TitleScreen : MonoBehaviour
 {
-    private IClickMethod clickMethod = InputMethodFactory.GetInputMethod();
+    private IClickMethod clickMethod = ClickMethodFactory.GetInputMethod();
     private bool transitionHappening = false;
     private SceneTransition sceneTransition;
 
