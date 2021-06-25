@@ -24,6 +24,13 @@ public class SceneTransition : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        else
+        {
+            // Being the first SceneTransition instance means
+            // that the game has just began and our main screen is loaded.
+            // Welcome our player with fancy black->white fade in effect!
+            FadeIn();
+        }
     }
 
     public void MoveToScene(string sceneName)

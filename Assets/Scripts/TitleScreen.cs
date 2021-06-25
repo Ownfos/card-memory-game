@@ -11,7 +11,6 @@ public class TitleScreen : MonoBehaviour
     private void Awake()
     {
         sceneTransition = GameObject.FindGameObjectWithTag("SceneTransition").GetComponent<SceneTransition>();
-        sceneTransition.FadeIn();
     }
 
     // Update is called once per frame

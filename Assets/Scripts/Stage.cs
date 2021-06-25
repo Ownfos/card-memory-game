@@ -38,7 +38,10 @@ public class Stage : MonoBehaviour
         RegisterCardSelectEventHandler();
 
         // Sample code for stage completion detection
+        var st = GameObject.FindGameObjectWithTag("SceneTransition").GetComponent<SceneTransition>();
+        OnStageComplete += (sender, arg) => st.MoveToScene("TitleScreen");
         OnStageComplete += (sender, arg) => Debug.Log("Stage complete");
+
     }
 
     // Register event handler for card selection event
