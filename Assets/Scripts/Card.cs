@@ -33,18 +33,23 @@ public class Card : MonoBehaviour
         IsFlipAnimRunning = true;
 
         // Start flipping animation
-        var targetAngle = IsFlipped ? 179.9f : 0.1f;
-        LeanTween.rotateY(gameObject, targetAngle, FlipAnimationLength)
-            .setEase(flipAnimationType)
-            .setOnComplete(() => IsFlipAnimRunning = false);
+        StartFlipAnimation(IsFlipped ? 179.9f : 0.1f);
 
         // Make flipped cards move forward slightly
-        var targetOffset = IsFlipped ? -0.5f : 0.0f;
-        LeanTween.moveLocalZ(gameObject, targetOffset, FlipAnimationLength)
-            .setEase(flipAnimationType);
+        StartZAxisMotion(IsFlipped ? -0.5f : 0.0f);
 
         // Trigger event
         OnFlip?.Invoke(this, this);
+    }
+
+    // Fix this card flipped
+    public void MarkAsCorrectlyFlipped()
+    {
+        // Set flag to true
+        IsCorrectlyFlipped = true;
+
+        // Move the card back to initial position with some delay
+        StartZAxisMotion(0.0f, FlipAnimationLength * 0.5f);
     }
 
     // Set its group and number, while initializing its front face to specified image
@@ -54,25 +59,26 @@ public class Card : MonoBehaviour
         SetFrontFaceTexture(frontfaceTexture);
     }
 
-    // Fix this card flipped
-    public void MarkAsCorrectlyFlipped()
-    {
-        // Set flag to true
-        IsCorrectlyFlipped = true;
-
-        // Move the card back to where it was.
-        // Note that cards move front when they are flipped.
-        // This allows player to distinguish between correctly
-        // flipped cards and not correctly flipped cards.
-        LeanTween.moveLocalZ(gameObject, 0.0f, FlipAnimationLength)
-            .setDelay(FlipAnimationLength * 0.5f)
-            .setEase(flipAnimationType);
-    }
-
     // Change the front face image of this card
     private void SetFrontFaceTexture(Texture2D texture)
     {
         var frontfaceTextureController = GetComponentInChildren<MeshTextureController>();
         frontfaceTextureController.SetTexture(texture);
+    }
+
+    // Begin rotating card around y-axis towards target angle
+    private void StartFlipAnimation(float targetAngle)
+    {
+        LeanTween.rotateY(gameObject, targetAngle, FlipAnimationLength)
+            .setEase(flipAnimationType)
+            .setOnComplete(() => IsFlipAnimRunning = false);
+    }
+
+    // Begin moving card along z-axis with specified delay before motion starts
+    private void StartZAxisMotion(float targetZ, float delay = 0.0f)
+    {
+        LeanTween.moveLocalZ(gameObject, targetZ, FlipAnimationLength)
+            .setDelay(delay)
+            .setEase(flipAnimationType);
     }
 }
