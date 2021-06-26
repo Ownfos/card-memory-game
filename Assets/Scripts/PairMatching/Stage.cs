@@ -56,8 +56,22 @@ public class Stage : MonoBehaviour
         FindAllCardsInStage();
         ConfigureCards(configuration.GetCardConfiguration(cards.Count));
 
+        // Record stage configuration to ReplayManager
+        RecordStageConfiguration();
+
         // Register event handler
         RegisterCardSelectEventHandler();
+    }
+
+    // If replay is not running, record current configuration to ReplayManager.
+    // This data will be used to replicate same configuration when we actually replay this game.
+    private void RecordStageConfiguration()
+    {
+        var replayManager = GameObject.FindGameObjectWithTag("ReplayManager").GetComponent<ReplayManager>();
+        if (!replayManager.IsReplayRunning)
+        {
+            replayManager.RecordStageConfiguration(GetCurrentConfiguration());
+        }
     }
 
     // Return the list of CardType for all cards in this stage.

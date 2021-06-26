@@ -33,13 +33,7 @@ public class SceneTransition : MonoBehaviour
     // Start scene transition with fade in/out effect without event handler
     public void MoveToScene(string sceneName)
     {
-        StartCoroutine(StartTransition(sceneName, () => { }));
-    }
-
-    // Start scene transition with fade in/out effect
-    public void MoveToScene(string sceneName, SceneTransitionEndHandler handler)
-    {
-        StartCoroutine(StartTransition(sceneName, handler));
+        StartCoroutine(StartTransition(sceneName));
     }
     
     // Gradually make the screen black
@@ -65,7 +59,7 @@ public class SceneTransition : MonoBehaviour
     }
 
     // A coroutine that performs fade out -> load scene -> fade in consecutively
-    private IEnumerator StartTransition(string sceneName, SceneTransitionEndHandler handler)
+    private IEnumerator StartTransition(string sceneName)
     {
         // Ignore transition if other transition is happening
         if (isTransitionOngoing)

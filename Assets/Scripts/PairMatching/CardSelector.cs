@@ -10,17 +10,47 @@ public class CardSelector : MonoBehaviour
     public event EventHandler<Card> OnCardSelect;
 
     // Click detection method (mouse / touch screen / replay)
-    public IClickMethod clickMethod = ClickMethodFactory.GetInputMethod();
+    public IClickMethod clickMethod;
 
     // Sound effect to play when a card is selected
     [SerializeField] private AudioClip selectSound;
 
     private void Awake()
     {
-        // Find the component that handles sound effects
-        var soundPlayer = GameObject.FindGameObjectWithTag("SoundEffectPlayer").GetComponent<SoundEffectPlayer>();
+        RegisterSoundEffectHandler();
+        clickMethod = ChooseClickMethod();
+    }
 
-        // Play sound effect when a card is selected
+    // Decide whether we should use regular click method (mouse/touch)
+    // or click simulator from ReplayManager.
+    // If we selected regular click method, attach a handler so that
+    // we can record click events happening from now on to ReplayManager.
+    private IClickMethod ChooseClickMethod()
+    {
+        var replayManager = GameObject.FindGameObjectWithTag("ReplayManager").GetComponent<ReplayManager>();
+        if (replayManager.IsReplayRunning)
+        {
+            Debug.Log("ClickSimulator selected");
+            var replayBuffer = replayManager.GetClickSimulator();
+            replayBuffer.StartSimulatingInput();
+
+            return replayBuffer;
+        }
+        else
+        {
+            Debug.Log("Default click method selected");
+            replayManager.StartRecording();
+            OnCardSelect += (sender, card) => replayManager.RecordClickEvent(new ClickEvent(clickMethod.GetClickScreenPosition()));
+
+            return new ClickByMouse();
+        }
+    }
+
+    // Find SoundEffectPlayer component and register event
+    // so that sound effect gets played whenever a card is selected.
+    private void RegisterSoundEffectHandler()
+    {
+        var soundPlayer = GameObject.FindGameObjectWithTag("SoundEffectPlayer").GetComponent<SoundEffectPlayer>();
         OnCardSelect += (sender, arg) => soundPlayer.Play(SoundEffect.CardSelect);
     }
 

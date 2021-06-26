@@ -15,9 +15,6 @@ public class StageManager : MonoBehaviour
     // Amount of time given before timeout happens
     [SerializeField] private float timerDuration;
 
-    // Stage initialization strategy
-    private ICardConfiguration configutation = new RandomConfiguration();
-
     // Index of next stage to propose
     private int nextStageIndex = 0;
 
@@ -98,9 +95,9 @@ public class StageManager : MonoBehaviour
         }
 
         // Initialize next stage
-        var nextStage = stages[nextStageIndex++];
+        var nextStage = stages[nextStageIndex];
         nextStage.gameObject.SetActive(true);
-        nextStage.configuration = configutation;
+        nextStage.configuration = GetStageConfiguration(nextStageIndex);
         nextStage.Initialize();
 
         // Set pop up animation for new stage
@@ -110,5 +107,21 @@ public class StageManager : MonoBehaviour
 
         // Attach stage completion handler
         nextStage.OnStageComplete += OnStageCompleteHandler;
+
+        // Increment index
+        nextStageIndex++;
+    }
+
+    // If replay is enabled, return the FixedConfiguration for that stage.
+    // If not, just return a RandomConfiguration instance.
+    private ICardConfiguration GetStageConfiguration(int stageIndex)
+    {
+        var replayManager = GameObject.FindGameObjectWithTag("ReplayManager").GetComponent<ReplayManager>();
+        if (replayManager.IsReplayRunning)
+        {
+            return replayManager.GetStageConfiguration(stageIndex);
+        }
+
+        return new RandomConfiguration();
     }
 }
