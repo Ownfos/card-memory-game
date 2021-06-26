@@ -3587,7 +3587,7 @@ MonoBehaviour:
   - {fileID: 1691528436}
   - {fileID: 419702451}
   stageSwapEffect: 30
-  timerDuration: 10
+  timerDuration: 90
 --- !u!4 &1994339642
 Transform:
   m_ObjectHideFlags: 0
