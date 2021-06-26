@@ -60,6 +60,18 @@ public class Stage : MonoBehaviour
         RegisterCardSelectEventHandler();
     }
 
+    // Return the list of CardType for all cards in this stage.
+    // Used to create a FixedConfiguration for replay feature.
+    public List<CardType> GetCurrentConfiguration()
+    {
+        var result = new List<CardType>();
+        foreach(var card in cards)
+        {
+            result.Add(card.Type);
+        }
+        return result;
+    }
+
     // Register event handler for card selection event
     private void RegisterCardSelectEventHandler()
     {
