@@ -29,6 +29,14 @@ public enum CardNumber
     Length
 }
 
+public enum CardState
+{
+    Backface,
+    FrontfaceIncorrect,
+    FrontfaceCorrect,
+    Flipping
+}
+
 public enum SoundEffect
 {
     CardSelect,

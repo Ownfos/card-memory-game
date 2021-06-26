@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
+// Card is a component that controls state and animation of card prefab.
 public class Card : MonoBehaviour
 {
     // Event that triggers whenever this card is flipped
@@ -9,15 +10,21 @@ public class Card : MonoBehaviour
     // The group and number of this card (e.g., spade jack)
     public CardType Type { get; private set; }
 
-    // This variable is true when the card's front face is visible
-    public bool IsFlipped { get; private set; } = false;
-
-    // This variable is true when flipping animation is running
-    public bool IsFlipAnimRunning { get; private set; } = false;
-
-    // This variable is set to true by Stage instance
-    // when a matching pair is consecutively flipped.
-    public bool IsCorrectlyFlipped { get; private set; } = false;
+    // The state of this card.
+    // Note that state gets fixed once it's set to CardState.FrontFaceCorrect
+    // (this is done by Stage component invoking MarkAsCorrectlyFlipped() on this instsance)
+    public CardState State
+    {
+        get { return _state; }
+        set
+        {
+            if (_state != CardState.FrontfaceCorrect)
+            {
+                _state = value;
+            }
+        }
+    }
+    private CardState _state = CardState.Backface;
 
     // The time it takes to complete flipping motion (in seconds)
     public float FlipAnimationLength { get; private set; } = 1.0f;
@@ -28,28 +35,29 @@ public class Card : MonoBehaviour
     // Flip the card around y-axis with animation.
     public void Flip()
     {
-        // Change state
-        IsFlipped = !IsFlipped;
-        IsFlipAnimRunning = true;
+        // Make flipped cards move forward slightly
+        StartZAxisMotion();
 
         // Begin rotating card
-        StartFlipAnimation(IsFlipped ? 179.9f : 0.1f);
+        StartFlipAnimation();
 
-        // Make flipped cards move forward slightly
-        StartZAxisMotion(IsFlipped ? -0.5f : 0.0f);
+        // Trigger event if we just flipped this card from backface to frontface
+        if (State == CardState.Backface)
+        {
+            OnFlip?.Invoke(this, this);
+        }
 
-        // Trigger event
-        OnFlip?.Invoke(this, this);
+        // Mark this card as flipping
+        State = CardState.Flipping;
     }
 
     // Fix this card flipped
     public void MarkAsCorrectlyFlipped()
     {
-        // Set flag to true
-        IsCorrectlyFlipped = true;
+        State = CardState.FrontfaceCorrect;
 
         // Move the card back to initial position with some delay
-        StartZAxisMotion(0.0f, FlipAnimationLength * 0.5f);
+        StartZAxisMotion(FlipAnimationLength * 0.5f);
     }
 
     // Set its group and number, while initializing its front face to specified image
@@ -67,16 +75,27 @@ public class Card : MonoBehaviour
     }
 
     // Begin rotating card around y-axis towards target angle
-    private void StartFlipAnimation(float targetAngle)
+    private void StartFlipAnimation()
     {
+        // Calculate target state based on current state
+        var isBackface = State == CardState.Backface;
+        var nextState = isBackface ? CardState.FrontfaceIncorrect : CardState.Backface;
+        var targetAngle = isBackface ? 179.9f : 0.1f;
+
+        // State motion
         LeanTween.rotateY(gameObject, targetAngle, FlipAnimationLength)
             .setEase(flipAnimationType)
-            .setOnComplete(() => IsFlipAnimRunning = false);
+            .setOnComplete(() => State = nextState);
     }
 
     // Begin moving card along z-axis with specified delay before motion starts
-    private void StartZAxisMotion(float targetZ, float delay = 0.0f)
+    private void StartZAxisMotion(float delay = 0.0f)
     {
+        // Calculate target state based on current state
+        var isBackface = State == CardState.Backface;
+        var targetZ = isBackface ? -0.5f : 0.0f;
+
+        // Start motion
         LeanTween.moveLocalZ(gameObject, targetZ, FlipAnimationLength)
             .setDelay(delay)
             .setEase(flipAnimationType);

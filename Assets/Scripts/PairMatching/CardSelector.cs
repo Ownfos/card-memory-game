@@ -49,12 +49,10 @@ public class CardSelector : MonoBehaviour
             OnCardSelect += (sender, card) => replayManager.RecordClickEvent(new ClickEvent(clickMethod.GetClickScreenPosition()));
             if (Application.platform == RuntimePlatform.Android)
             {
-                Debug.Log("touch");
                 return new ClickByTouch();
             }
             else
             {
-                Debug.Log("mouse");
                 return new ClickByMouse();
             }
         }

@@ -112,7 +112,7 @@ public class Stage : MonoBehaviour
     private void OnCardSelectHandler(object sender, Card card)
     {
         // Flip the card if it's showing back face and not moving
-        if(!card.IsFlipAnimRunning && !card.IsFlipped)
+        if(card.State == CardState.Backface)
         {
             card.Flip();
         }
@@ -153,31 +153,28 @@ public class Stage : MonoBehaviour
     // Event handler for card flip event
     private void OnFlipHandler(object sender, Card card)
     {
-        if (card.IsFlipped)
+        // First card is flipped
+        if (firstFlippedCard == null)
         {
-            // First card is flipped
-            if (firstFlippedCard == null)
+            firstFlippedCard = card;
+        }
+        // Second card is flipped
+        else
+        {
+            // Handle events
+            secondFlippedCard = card;
+            if (firstFlippedCard.Type.Equals(card.Type))
             {
-                firstFlippedCard = card;
+                OnPairMatch.Invoke(this, EventArgs.Empty);
             }
-            // Second card is flipped
             else
             {
-                // Handle events
-                secondFlippedCard = card;
-                if (firstFlippedCard.Type.Equals(card.Type))
-                {
-                    OnPairMatch.Invoke(this, EventArgs.Empty);
-                }
-                else
-                {
-                    OnPairMismatch.Invoke(this, EventArgs.Empty);
-                }
-
-                // Reset card references
-                firstFlippedCard = null;
-                secondFlippedCard = null;
+                OnPairMismatch.Invoke(this, EventArgs.Empty);
             }
+
+            // Reset card references
+            firstFlippedCard = null;
+            secondFlippedCard = null;
         }
     }
 
@@ -193,25 +190,27 @@ public class Stage : MonoBehaviour
         }
     }
 
-    // Returns true if all cards are correctly flipped
-    private bool CheckStageCompletion()
-    {
-        foreach(var card in cards)
-        {
-            if (!card.IsCorrectlyFlipped)
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
     // After some delay, flip back each card
     private void OnPairMismatchHandler(object sender, EventArgs e)
     {
         StartCoroutine(FlipBack(firstFlippedCard));
         StartCoroutine(FlipBack(secondFlippedCard));
+    }
+
+    // Returns true if all cards are correctly flipped
+    private bool CheckStageCompletion()
+    {
+        Debug.Log("check state completion");
+        foreach (var card in cards)
+        {
+            if (card.State != CardState.FrontfaceCorrect)
+            {
+                Debug.Log(card.State);
+                return false;
+            }
+        }
+
+        return true;
     }
 
     // Make sure that current flip animation is done
