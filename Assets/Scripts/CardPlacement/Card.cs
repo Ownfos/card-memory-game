@@ -4,7 +4,7 @@ using UnityEngine;
 // Card is a component that controls state and animation of card prefab.
 public class Card : MonoBehaviour
 {
-    // Event that triggers whenever this card is flipped
+    // Event that triggers whenever this card is flipped from backface to frontface
     public event EventHandler<Card> OnFlip;
 
     // The group and number of this card (e.g., spade jack)
@@ -60,16 +60,23 @@ public class Card : MonoBehaviour
         StartZAxisMotion(FlipAnimationLength * 0.5f);
     }
 
-    // Set its group and number, while initializing its front face to specified image
-    public void Initialize(CardType type, Texture2D frontfaceTexture)
+    // Set its group and number, while initializing its frontface to the specified image
+    public void Initialize(CardType type)
     {
         Type = type;
-        SetFrontFaceTexture(frontfaceTexture);
+
+        SetFrontFaceTexture();
     }
 
     // Change the front face image of this card
-    private void SetFrontFaceTexture(Texture2D texture)
+    private void SetFrontFaceTexture()
     {
+        // Find the component that gives texture for each type
+        var texture = GameObject.FindGameObjectWithTag("FrontFaceImages")
+            .GetComponent<CardFrontFaceImages>()
+            .GetFrontFaceTexture(Type);
+
+        // Set the texture to image that we just have found
         var frontfaceTextureController = GetComponentInChildren<MeshTextureController>();
         frontfaceTextureController.SetTexture(texture);
     }
@@ -77,10 +84,15 @@ public class Card : MonoBehaviour
     // Begin rotating card around y-axis towards target angle
     private void StartFlipAnimation()
     {
-        // Calculate target state based on current state
+        // If the card is currently showing backface, we need to rotate it 180 degrees.
+        // Note that target angle is neither 0 nor 180 in order to guarantee rotating direction.
         var isBackface = State == CardState.Backface;
-        var nextState = isBackface ? CardState.FrontfaceIncorrect : CardState.Backface;
         var targetAngle = isBackface ? 179.9f : 0.1f;
+
+        // FrontFaceIncorrect is the default state for a card showing frontface.
+        // If it was matched with a correcponding pair, Stage component will call
+        // MarkAsCorrectlyFlipped() to change the state to FrontFaceCorrect.
+        var nextState = isBackface ? CardState.FrontfaceIncorrect : CardState.Backface;
 
         // State motion
         LeanTween.rotateY(gameObject, targetAngle, FlipAnimationLength)
@@ -91,7 +103,8 @@ public class Card : MonoBehaviour
     // Begin moving card along z-axis with specified delay before motion starts
     private void StartZAxisMotion(float delay = 0.0f)
     {
-        // Calculate target state based on current state
+        // If the card is currently showing backface, we need to go forward.
+        // Otherwise, get back to the initial position (z = 0).
         var isBackface = State == CardState.Backface;
         var targetZ = isBackface ? -0.5f : 0.0f;
 

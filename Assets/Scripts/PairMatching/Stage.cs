@@ -140,12 +140,7 @@ public class Stage : MonoBehaviour
         // Loop over card instances
         for(int i = 0; i < cards.Count; ++i)
         {
-            // Initialize
-            var type = cardConfiguration[i];
-            var texture = frontfaceImages.GetFrontFaceTexture(type);
-            cards[i].Initialize(type, texture);
-
-            // Attach flip event handler
+            cards[i].Initialize(cardConfiguration[i]);
             cards[i].OnFlip += OnFlipHandler;
         }
     }
@@ -197,15 +192,14 @@ public class Stage : MonoBehaviour
         StartCoroutine(FlipBack(secondFlippedCard));
     }
 
-    // Returns true if all cards are correctly flipped
+    // Returns true if all pairs are matched
     private bool CheckStageCompletion()
     {
-        Debug.Log("check state completion");
+        // If any of the cards are not yet flipped correctly, return false.
         foreach (var card in cards)
         {
             if (card.State != CardState.FrontfaceCorrect)
             {
-                Debug.Log(card.State);
                 return false;
             }
         }
@@ -213,11 +207,12 @@ public class Stage : MonoBehaviour
         return true;
     }
 
-    // Make sure that current flip animation is done
-    // and then flip the card back
+    // Flip the incorrectly matched card pair back to backface.
     private IEnumerator FlipBack(Card card)
     {
+        // Make sure flip animation (if any) is done
         yield return new WaitForSeconds(card.FlipAnimationLength);
+
         card.Flip();
     }
 }
