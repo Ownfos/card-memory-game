@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// This class subscribe to ScoreManager's OnScoreChange event
-// to show the latest score as text UI
+// ScoreListener is a component for an object with Text component
+// that actively updates its content to the Score property of ScoreManager.
 [RequireComponent(typeof(Text))]
 public class ScoreListener : MonoBehaviour
 {

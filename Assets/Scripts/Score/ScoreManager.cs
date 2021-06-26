@@ -3,6 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// ScoreManager is a class that calculates and record scores.
+// It also keeps the best score until now.
+//
+// Whenever a game ends, StageManager should call RecordFinalScore().
 public class ScoreManager : MonoBehaviour
 {
     // Event that triggers when score is modified

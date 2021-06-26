@@ -3,6 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// TimerManager is a component that tracks remaning time until
+// timeover happens, and actively update UI to display it.
+//
+// Timer UI is the vertical gauge at the right side of MainGame scene.
+// It consists of two rectangle images: background bar and fill bar.
+// Background bar is the one with color (blue ~ red) and fill bar
+// is the one with white color (thus indistinquishable with white background).
+// As time pass, the fill bar gradually scales down along y-axis,
+// revealing the background bar it was originally covering.
 public class TimerManager : MonoBehaviour
 {
     // Event that triggers when remaining time is less than zero

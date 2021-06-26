@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// A component that manages image texture of mesh renderer
+// A component that manages image texture of renderer.
+// Card component uses this class to change its frontface image.
 [RequireComponent(typeof(Renderer))]
-public class MeshTextureController : MonoBehaviour
+public class RendererTextureController : MonoBehaviour
 {
     private Material material;
 

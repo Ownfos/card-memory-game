@@ -27,10 +27,12 @@ public class CardSelector : MonoBehaviour
         clickMethod = ChooseClickMethod();
     }
 
-    // Decide whether we should use regular click method (mouse/touch)
-    // or click simulator from ReplayManager.
+    // Decide whether we should use regular click method (mouse/touch) or click simulator from ReplayManager.
     // If we selected regular click method, attach a handler so that
     // we can record click events happening from now on to ReplayManager.
+    //
+    // Note that replayManager.IsReplayRunning is modified when a button with
+    // ReplayActivationButton component attached to it.
     private IClickMethod ChooseClickMethod()
     {
         var replayManager = GameObject.FindGameObjectWithTag("ReplayManager").GetComponent<ReplayManager>();
