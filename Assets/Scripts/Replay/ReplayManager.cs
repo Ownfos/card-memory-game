@@ -23,6 +23,7 @@ public class ReplayManager : MonoBehaviour
     // Think of this value as the time when we enter MainGame scene.
     private float recordStartTime;
 
+    // Add stage configuration to ReplayBuffer
     public void RecordStageConfiguration(List<CardType> configuration)
     {
         replayBuffer.RecordStageConfiguration(configuration);
@@ -35,17 +36,21 @@ public class ReplayManager : MonoBehaviour
         replayBuffer = new ReplayBuffer();
     }
 
+    // Add the click event with relative time from record start to ReplayBuffer
     public void RecordClickEvent(ClickEvent click)
     {
         click.time -= recordStartTime;
         replayBuffer.RecordClickEvent(click);
     }
 
+    // Get the card configuration stored in ReplayBuffer.
+    // The stageIndex corresponds to the index of a stage in StageManager.stages variable.
     public ICardConfiguration GetStageConfiguration(int stageIndex)
     {
         return replayBuffer.GetStageConfiguration(stageIndex);
     }
 
+    // Return current replay buffer so that it can be used as click simulator
     public ReplayBuffer GetClickSimulator()
     {
         return replayBuffer;

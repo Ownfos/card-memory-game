@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+// SceneTransition is a permanently existing component
+// that handles scene loading with fade in/out effect.
+// It also provides fade effect seperately without scene transition.
 public class SceneTransition : MonoBehaviour
 {
     public delegate void SceneTransitionEndHandler();
