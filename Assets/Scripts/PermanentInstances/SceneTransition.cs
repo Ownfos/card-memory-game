@@ -78,10 +78,10 @@ public class SceneTransition : MonoBehaviour
 
         SceneManager.LoadScene(sceneName);
 
-        FadeIn();
-        yield return new WaitForSeconds(fadeTime);
-
         // Set transition flag to false
         isTransitionOngoing = false;
+
+        FadeIn();
+        yield return new WaitForSeconds(fadeTime);
     }
 }

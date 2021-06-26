@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Quit button simply provides a button click handler that terminates application
-public class QuitButton : MonoBehaviour
+public class QuitButtonHandler : MonoBehaviour
 {
     // Event handler for quit button click
     public void OnButtonClick()

@@ -27,6 +27,9 @@ public class TimerManager : MonoBehaviour
     [SerializeField] private Color timerFullColor;
     [SerializeField] private Color timerEmptyColor;
 
+    // Flag that controls whether we decrease RemainingTime on Update
+    public bool IsTimerRunning { get; private set; } = false;
+
     // Properties for max and current timer value
     public float MaxTime { get; private set; } = 0.0f;
     public float RemainingTime
@@ -67,7 +70,7 @@ public class TimerManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (RemainingTime > 0.0f)
+        if (IsTimerRunning && RemainingTime > 0.0f)
         {
             RemainingTime -= Time.deltaTime;
         }
@@ -76,8 +79,14 @@ public class TimerManager : MonoBehaviour
     // Set the remaning time to duration
     public void StartTimer(float duration)
     {
+        IsTimerRunning = true;
         MaxTime = duration;
         RemainingTime = duration;
+    }
+
+    public void StopTimer()
+    {
+        IsTimerRunning = false;
     }
 
     // Update fill bar and background bar of timer UI

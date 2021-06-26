@@ -19,7 +19,7 @@ public class ReplayManager : MonoBehaviour
     private ReplayBuffer replayBuffer;
 
     // List of all ReplayBuffers generated with their record end time.
-    [SerializeField] private List<GameHistory> gameHistories = new List<GameHistory>();
+    public List<GameHistory> GameHistories { get; private set; } = new List<GameHistory>();
 
     // The value of Time.time when we started recording click events.
     // ReplayBuffer will record the relative time, using this value as offset.
@@ -50,7 +50,7 @@ public class ReplayManager : MonoBehaviour
         if (!IsReplayRunning)
         {
             var score = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>().Score;
-            gameHistories.Add(new GameHistory(score, replayBuffer));
+            GameHistories.Add(new GameHistory(score, replayBuffer));
         }
     }
 
@@ -65,12 +65,12 @@ public class ReplayManager : MonoBehaviour
     // The stageIndex corresponds to the index of a stage in StageManager.stages variable.
     public ICardConfiguration GetStageConfiguration(int stageIndex)
     {
-        return gameHistories[ReplayHistoryIndex].replayBuffer.GetStageConfiguration(stageIndex);
+        return GameHistories[ReplayHistoryIndex].replayBuffer.GetStageConfiguration(stageIndex);
     }
 
     // Return current replay buffer so that it can be used as click simulator
     public ReplayBuffer GetClickSimulator()
     {
-        return gameHistories[ReplayHistoryIndex].replayBuffer;
+        return GameHistories[ReplayHistoryIndex].replayBuffer;
     }
 }

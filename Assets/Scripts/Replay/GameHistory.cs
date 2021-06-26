@@ -13,4 +13,9 @@ public struct GameHistory
         this.score = score;
         this.replayBuffer = replayBuffer;
     }
+
+    public string Description()
+    {
+        return $"[{dateTime}] Score: {score}";
+    }
 }
