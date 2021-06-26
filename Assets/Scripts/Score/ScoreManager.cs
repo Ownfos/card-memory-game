@@ -9,6 +9,7 @@ public class ScoreManager : MonoBehaviour
     public event EventHandler<int> OnScoreChange;
 
     // Property for score
+    public int BestScore { get; private set; } = 0;
     public int Score
     {
         get { return _score; }
@@ -28,6 +29,14 @@ public class ScoreManager : MonoBehaviour
 
     // Amount of score to add when pair match happends
     private int matchReward = 20;
+
+    public void RecordFinalScore()
+    {
+        if (Score > BestScore)
+        {
+            BestScore = Score;
+        }
+    }
 
     public void ResetScore()
     {

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Text))]
 public class ScoreListener : MonoBehaviour
 {
-    // Text
+    // Text component to display
     private Text scoreText;
 
     private void Awake()

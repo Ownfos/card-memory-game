@@ -73,7 +73,15 @@ public class StageManager : MonoBehaviour
     // After some delay, move to the ScoreScreen scene
     private IEnumerator HandleGameCompletion()
     {
+        // Wait for last card flip animation to end
         yield return new WaitForSeconds(0.5f);
+
+        // Notify score for this gameplay
+        GameObject.FindGameObjectWithTag("ScoreManager")
+            .GetComponent<ScoreManager>()
+            .RecordFinalScore();
+
+        // Move to score screen
         GameObject.FindGameObjectWithTag("SceneTransition")
             .GetComponent<SceneTransition>()
             .MoveToScene("ScoreScreen");
