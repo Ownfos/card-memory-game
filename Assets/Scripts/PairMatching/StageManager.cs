@@ -83,6 +83,11 @@ public class StageManager : MonoBehaviour
             .GetComponent<ScoreManager>()
             .RecordFinalScore();
 
+        // Notify replay manager to finish recording this gameplay
+        GameObject.FindGameObjectWithTag("ReplayManager")
+            .GetComponent<ReplayManager>()
+            .FinishRecording();
+
         // Move to score screen
         GameObject.FindGameObjectWithTag("SceneTransition")
             .GetComponent<SceneTransition>()

@@ -12,7 +12,14 @@ public class ReplayManager : MonoBehaviour
     // StageManager will reference this instance.
     public bool IsReplayRunning { get; set; } = false;
 
+    // The index of gameHistories we will use to replay.
+    public int ReplayHistoryIndex { get; set; }
+
+    // The replay data we are currently writing to.
     private ReplayBuffer replayBuffer;
+
+    // List of all ReplayBuffers generated with their record end time.
+    [SerializeField] private List<GameHistory> gameHistories = new List<GameHistory>();
 
     // The value of Time.time when we started recording click events.
     // ReplayBuffer will record the relative time, using this value as offset.
@@ -36,6 +43,17 @@ public class ReplayManager : MonoBehaviour
         replayBuffer = new ReplayBuffer();
     }
 
+    // Add a new entry to gameHistories with current replay data
+    // and score if this gameplay was not triggered by a replay button.
+    public void FinishRecording()
+    {
+        if (!IsReplayRunning)
+        {
+            var score = GameObject.FindGameObjectWithTag("ScoreManager").GetComponent<ScoreManager>().Score;
+            gameHistories.Add(new GameHistory(score, replayBuffer));
+        }
+    }
+
     // Add the click event with relative time from record start to ReplayBuffer
     public void RecordClickEvent(ClickEvent click)
     {
@@ -47,12 +65,12 @@ public class ReplayManager : MonoBehaviour
     // The stageIndex corresponds to the index of a stage in StageManager.stages variable.
     public ICardConfiguration GetStageConfiguration(int stageIndex)
     {
-        return replayBuffer.GetStageConfiguration(stageIndex);
+        return gameHistories[ReplayHistoryIndex].replayBuffer.GetStageConfiguration(stageIndex);
     }
 
     // Return current replay buffer so that it can be used as click simulator
     public ReplayBuffer GetClickSimulator()
     {
-        return replayBuffer;
+        return gameHistories[ReplayHistoryIndex].replayBuffer;
     }
 }
