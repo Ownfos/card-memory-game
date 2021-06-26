@@ -7,7 +7,7 @@ public class ClickByTouch : IClickMethod
 {
     public bool ClickHappened()
     {
-        return Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended;
+        return Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began;
     }
 
     public Vector2 GetClickScreenPosition()
