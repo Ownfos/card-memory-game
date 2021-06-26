@@ -23,6 +23,12 @@ public class Stage : MonoBehaviour
     private Card firstFlippedCard = null;
     private Card secondFlippedCard = null;
 
+    // Scores to add/deduct on pair match/mismatch
+    [SerializeField] private int _matchReward;
+    [SerializeField] private int _mismatchPanelty;
+    public int MatchReward { get { return _matchReward; } }
+    public int MismatchPanelty { get { return _mismatchPanelty; } }
+
     void Awake()
     {
         // Find the component that handles score

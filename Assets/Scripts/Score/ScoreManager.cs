@@ -28,12 +28,6 @@ public class ScoreManager : MonoBehaviour
     }
     private int _score = 0;
 
-    // Amount of score to deduct when pair mismatch happens
-    private int mismatchPanelty = 1;
-
-    // Amount of score to add when pair match happends
-    private int matchReward = 20;
-
     public void RecordFinalScore()
     {
         if (Score > BestScore)
@@ -49,11 +43,11 @@ public class ScoreManager : MonoBehaviour
 
     public void OnPairMatchHandler(object sender, EventArgs e)
     {
-        Score += matchReward;
+        Score += ((Stage)sender).MatchReward;
     }
 
     public void OnPairMismatchHandler(object sender, EventArgs e)
     {
-        Score = Math.Max(0, Score - mismatchPanelty);
+        Score = Math.Max(0, Score - ((Stage)sender).MismatchPanelty);
     }
 }
