@@ -5,6 +5,7 @@ using UnityEngine;
 // A struct that stores time and position of click event
 public struct ClickEvent
 {
+    // Create a click event with current time (Time.time)
     public ClickEvent(Vector2 screenPosition)
     {
         time = Time.time;

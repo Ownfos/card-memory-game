@@ -87,23 +87,15 @@ public class StageManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
 
             var currentStage = stages[nextStageIndex - 1];
-            LeanTween.scale(currentStage.gameObject, Vector3.zero, 1.0f)
-                .setOnComplete(() => currentStage.gameObject.SetActive(false))
-                .setEase(stageSwapEffect);
+            currentStage.Deactivate(stageSwapEffect);
 
             yield return new WaitForSeconds(1.0f);
         }
 
         // Initialize next stage
         var nextStage = stages[nextStageIndex];
-        nextStage.gameObject.SetActive(true);
-        nextStage.configuration = GetStageConfiguration(nextStageIndex);
-        nextStage.Initialize();
-
-        // Set pop up animation for new stage
-        nextStage.transform.localScale = Vector3.zero;
-        LeanTween.scale(nextStage.gameObject, Vector3.one, 1.0f)
-                .setEase(stageSwapEffect);
+        nextStage.Activate(stageSwapEffect);
+        nextStage.Initialize(GetStageConfiguration(nextStageIndex));
 
         // Attach stage completion handler
         nextStage.OnStageComplete += OnStageCompleteHandler;

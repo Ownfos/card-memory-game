@@ -17,6 +17,12 @@ public class CardSelector : MonoBehaviour
 
     private void Awake()
     {
+        Initialize();
+    }
+
+    // Configure input method and enable sound effect on card select
+    private void Initialize()
+    {
         RegisterSoundEffectHandler();
         clickMethod = ChooseClickMethod();
     }
@@ -30,7 +36,7 @@ public class CardSelector : MonoBehaviour
         var replayManager = GameObject.FindGameObjectWithTag("ReplayManager").GetComponent<ReplayManager>();
         if (replayManager.IsReplayRunning)
         {
-            Debug.Log("ClickSimulator selected");
+            // Use replay buffer as input simulator
             var replayBuffer = replayManager.GetClickSimulator();
             replayBuffer.StartSimulatingInput();
 
@@ -38,7 +44,7 @@ public class CardSelector : MonoBehaviour
         }
         else
         {
-            Debug.Log("Default click method selected");
+            // Use default click method and start recording to ReplayManager
             replayManager.StartRecording();
             OnCardSelect += (sender, card) => replayManager.RecordClickEvent(new ClickEvent(clickMethod.GetClickScreenPosition()));
 

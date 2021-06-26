@@ -3,12 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// A stage is an object with card prefabs as child object.
+// Each card 
 public class Stage : MonoBehaviour
 {
-    // The card configuration strategy to use.
-    // By default, we randomly select and place card pairs.
-    public ICardConfiguration configuration = new RandomConfiguration();
-
     // Event that triggers when all cards in this stage is correctly flipped
     public event EventHandler OnStageComplete;
 
@@ -24,7 +22,6 @@ public class Stage : MonoBehaviour
     // The Card component of lastly flipped card instances
     private Card firstFlippedCard = null;
     private Card secondFlippedCard = null;
-
 
     void Awake()
     {
@@ -48,9 +45,27 @@ public class Stage : MonoBehaviour
         OnStageComplete += (sender, arg) => soundPlayer.Play(SoundEffect.StageComplete);
     }
 
+    // Activate gameObject and make the stage pop in (scale: 0 -> 1)
+    public void Activate(LeanTweenType stageSwapEffect)
+    {
+        gameObject.SetActive(true);
+        transform.localScale = Vector3.zero;
+        LeanTween.scale(gameObject, Vector3.one, 1.0f)
+                .setEase(stageSwapEffect);
+    }
+
+    // Make the stage pop out (scale: 1 -> 0) and deactivate gameObject
+    public void Deactivate(LeanTweenType stageSwapEffect)
+    {
+        transform.localScale = Vector3.one;
+        LeanTween.scale(gameObject, Vector3.zero, 1.0f)
+            .setOnComplete(() => gameObject.SetActive(false))
+            .setEase(stageSwapEffect);
+    }
+
     // Setup cards according to configuration strategy
     // and register card selection event handler
-    public void Initialize()
+    public void Initialize(ICardConfiguration configuration)
     {
         // Prepare cards
         FindAllCardsInStage();
