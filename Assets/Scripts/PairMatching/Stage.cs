@@ -17,7 +17,7 @@ public class Stage : MonoBehaviour
     public event EventHandler OnPairMismatch;
 
     // The Card components of each card in this stage
-    private List<Card> cards;
+    private List<Card> cards = new List<Card>();
 
     // The Card component of lastly flipped card instances
     private Card firstFlippedCard = null;
@@ -121,7 +121,6 @@ public class Stage : MonoBehaviour
     // Loop over child objects and save their Card components to variable 'cards'
     private void FindAllCardsInStage()
     {
-        cards = new List<Card>();
         for (int i = 0; i < transform.childCount; ++i)
         {
             cards.Add(transform.GetChild(i).GetComponent<Card>());
@@ -134,10 +133,6 @@ public class Stage : MonoBehaviour
     // of child objects (cards) in this stage.
     private void ConfigureCards(List<CardType> cardConfiguration)
     {
-        // Find the component that gives texture for each type
-        var frontfaceImages = GameObject.FindGameObjectWithTag("FrontFaceImages").GetComponent<CardFrontFaceImages>();
-        
-        // Loop over card instances
         for(int i = 0; i < cards.Count; ++i)
         {
             cards[i].Initialize(cardConfiguration[i]);

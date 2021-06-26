@@ -76,9 +76,9 @@ public class Card : MonoBehaviour
             .GetComponent<CardFrontFaceImages>()
             .GetFrontFaceTexture(Type);
 
-        // Set the texture to image that we just have found
-        var frontfaceTextureController = GetComponentInChildren<MeshTextureController>();
-        frontfaceTextureController.SetTexture(texture);
+        // Set the texture of frontface image to what we've just found.
+        // Note that each card prefab has one MeshTextureController attached to the frontface object.
+        GetComponentInChildren<MeshTextureController>().SetTexture(texture);
     }
 
     // Begin rotating card around y-axis towards target angle
