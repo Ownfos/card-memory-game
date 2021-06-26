@@ -47,8 +47,16 @@ public class CardSelector : MonoBehaviour
             // Use default click method and start recording to ReplayManager
             replayManager.StartRecording();
             OnCardSelect += (sender, card) => replayManager.RecordClickEvent(new ClickEvent(clickMethod.GetClickScreenPosition()));
-
-            return new ClickByMouse();
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                Debug.Log("touch");
+                return new ClickByTouch();
+            }
+            else
+            {
+                Debug.Log("mouse");
+                return new ClickByMouse();
+            }
         }
     }
 

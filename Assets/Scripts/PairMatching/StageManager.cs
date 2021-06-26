@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// StageManager takes care of initializing and selecting
+// appropriate stages and handling game over condition (all stage complete / timeout).
 public class StageManager : MonoBehaviour
 {
     // The list of stages to be proposed sequentially
