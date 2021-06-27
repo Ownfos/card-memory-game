@@ -63,7 +63,7 @@ public class ReplayManager : MonoBehaviour
 
     // Get the card configuration stored in ReplayBuffer.
     // The stageIndex corresponds to the index of a stage in StageManager.stages variable.
-    public ICardConfiguration GetStageConfiguration(int stageIndex)
+    public IStageConfiguration GetStageConfiguration(int stageIndex)
     {
         return GameHistories[ReplayHistoryIndex].replayBuffer.GetStageConfiguration(stageIndex);
     }

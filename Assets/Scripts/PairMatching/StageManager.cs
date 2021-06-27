@@ -121,7 +121,7 @@ public class StageManager : MonoBehaviour
 
     // If replay is enabled, return the FixedConfiguration for that stage.
     // If not, just return a RandomConfiguration instance.
-    private ICardConfiguration GetStageConfiguration(int stageIndex)
+    private IStageConfiguration GetStageConfiguration(int stageIndex)
     {
         var replayManager = GameObject.FindGameObjectWithTag("ReplayManager").GetComponent<ReplayManager>();
         if (replayManager.IsReplayRunning)

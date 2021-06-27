@@ -76,7 +76,7 @@ public class ReplayBuffer : IClickMethod
 
     // Return a card configuration for the specified stage.
     // The stageIndex corresponds to the index of a stage in StageManager.stages variable.
-    public ICardConfiguration GetStageConfiguration(int stageIndex)
+    public IStageConfiguration GetStageConfiguration(int stageIndex)
     {
         return stageConfigurations[stageIndex];
     }

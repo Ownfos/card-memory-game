@@ -4,14 +4,14 @@ using UnityEngine;
 
 // RandomPlacement is a class that dynamically generates
 // a random array of CardType when requested.
-public class RandomConfiguration : ICardConfiguration
+public class RandomConfiguration : IStageConfiguration
 {
 
     // Give a randomized card type configuration through following steps:
     // 1. select n/2 different CardTypes
     // 2. create a list from the selected types
     // 3. randomly shuffle the list
-    public List<CardType> GetCardConfiguration(int numCards)
+    public List<CardType> GetStageConfiguration(int numCards)
     {
         var numPairs = numCards / 2;
         var typePerPair = CreateRandomTypePerPair(numPairs);

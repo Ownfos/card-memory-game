@@ -4,9 +4,9 @@
 //
 // Card configuration refers to the array of CardType,
 // which is directly mapped to the Card instances in a stage.
-public interface ICardConfiguration
+public interface IStageConfiguration
 {
     // Generate a list of CardType where each of the
     // different CardType appears exactly twice.
-    List<CardType> GetCardConfiguration(int numCards);
+    List<CardType> GetStageConfiguration(int numCards);
 }

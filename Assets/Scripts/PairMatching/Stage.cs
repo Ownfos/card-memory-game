@@ -71,11 +71,11 @@ public class Stage : MonoBehaviour
 
     // Setup cards according to configuration strategy
     // and register card selection event handler
-    public void Initialize(ICardConfiguration configuration)
+    public void Initialize(IStageConfiguration configuration)
     {
         // Prepare cards
         FindAllCardsInStage();
-        ConfigureCards(configuration.GetCardConfiguration(cards.Count));
+        ConfigureCards(configuration.GetStageConfiguration(cards.Count));
 
         // Record stage configuration to ReplayManager
         RecordStageConfiguration();

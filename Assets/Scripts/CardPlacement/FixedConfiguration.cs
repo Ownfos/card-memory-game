@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// FixedConfiguration is an implementation of ICardConfiguration
+// FixedConfiguration is an implementation of IStageConfiguration
 // responsible for reproducing same card configuration for each state.
 //
 // Stage component will call RecordStageConfiguration() during initialization,
 // which sends and stores its card configuration as FixedConfiguration instance.
-public class FixedConfiguration : ICardConfiguration
+public class FixedConfiguration : IStageConfiguration
 {
     private List<CardType> cardConfiguration;
 
@@ -16,7 +16,7 @@ public class FixedConfiguration : ICardConfiguration
         this.cardConfiguration = cardConfiguration;
     }
 
-    public List<CardType> GetCardConfiguration(int numCards)
+    public List<CardType> GetStageConfiguration(int numCards)
     {
         return cardConfiguration;
     }
