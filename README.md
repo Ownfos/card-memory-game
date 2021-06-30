@@ -21,3 +21,12 @@ A card pair matching memory game made with Unity
 - [Free Playing Cards Pack](https://assetstore.unity.com/packages/3d/props/tools/free-playing-cards-pack-154780) from asset store
 - Sound effects from [mixkit.co/free-sound-effects/game](https://mixkit.co/free-sound-effects/game)
 - Background music from [www.chosic.com/free-music/games](https://www.chosic.com/free-music/games/page/3/)
+
+## Screenshots
+
+![main menu](https://github.com/Ownfos/card-memory-game/blob/main/Screenshots/main%20menu.png)
+![stage1](https://github.com/Ownfos/card-memory-game/blob/main/Screenshots/stage1.png)
+![stage2](https://github.com/Ownfos/card-memory-game/blob/main/Screenshots/stage2.png)
+![stage3](https://github.com/Ownfos/card-memory-game/blob/main/Screenshots/stage3.png)
+![score screen](https://github.com/Ownfos/card-memory-game/blob/main/Screenshots/score%20screen.png)
+![replay list](https://github.com/Ownfos/card-memory-game/blob/main/Screenshots/replay%20list.png)
